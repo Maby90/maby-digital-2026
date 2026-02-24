@@ -24,7 +24,7 @@ const Action = () => {
                     className="mt-8 bg-accent text-background px-12 py-6 rounded-full font-sans text-xl md:text-2xl font-bold btn-magnetic group flex items-center gap-4 shadow-[0_0_40px_rgba(204,88,51,0.3)] hover:shadow-[0_0_60px_rgba(204,88,51,0.5)] transition-shadow"
                 >
                     <span className="relative z-10 group-hover:text-background transition-colors duration-300">
-                        Candidati per lavorare con me
+                        Proponi un Progetto
                     </span>
                     <svg
                         className="w-8 h-8 relative z-10 group-hover:translate-x-2 transition-transform duration-300"

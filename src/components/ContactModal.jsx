@@ -59,7 +59,7 @@ const ContactModal = () => {
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    _subject: `Nuova Candidatura da ${formData.nome}`,
+                    _subject: `Nuova Richiesta da ${formData.nome}`,
                     "Nome": formData.nome,
                     "Email": formData.email,
                     "Telefono": formData.telefono,
@@ -111,11 +111,11 @@ const ContactModal = () => {
 
                 <div className="p-8 md:p-12 max-h-[90vh] overflow-y-auto">
                     <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary mb-4">
-                        Candidati per <span className="font-drama italic font-light text-accent">lavorare con me</span>
+                        Proponi un <span className="font-drama italic font-light text-accent">Progetto</span>
                     </h2>
 
                     <p className="font-sans text-dark/70 leading-relaxed mb-8 text-sm md:text-base border-l-2 border-accent pl-4 py-1">
-                        Compilare questo questionario non ti vincola a nulla. È un primo passo per esplorare le possibilità, senza alcuna pressione o impegno. Se dalle risposte emergono spunti interessanti, ti contatterò per valutare insieme la strada migliore da percorrere.
+                        Compilare questo questionario è il primo passo per capire se c'è un allineamento strategico tra le nostre visioni. Non c'è alcun impegno, ma mi aiuterà a valutare come posso supportarti al meglio e se siamo il match giusto per un successo reciproco.
                     </p>
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -178,7 +178,7 @@ const ContactModal = () => {
                             {isSubmitting ? (
                                 <Loader2 className="animate-spin relative z-10" size={24} />
                             ) : (
-                                <span className="relative z-10 transition-colors duration-300">Invia Candidatura</span>
+                                <span className="relative z-10 transition-colors duration-300">Invia Proposta</span>
                             )}
                         </button>
                     </form>

@@ -21,7 +21,7 @@ const ThankYou = () => {
                 </div>
 
                 <h1 className="font-heading font-bold text-4xl md:text-5xl text-primary mb-6">
-                    Candidatura <span className="font-drama italic font-light text-accent">Ricevuta</span>
+                    Richiesta <span className="font-drama italic font-light text-accent">Ricevuta</span>
                 </h1>
 
                 <p className="font-sans text-lg text-dark/70 mb-10 max-w-lg leading-relaxed">
