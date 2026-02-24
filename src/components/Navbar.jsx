@@ -18,7 +18,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed top-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-500 rounded-full px-6 py-3 flex items-center justify-between gap-8 md:gap-16
+            className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-500 rounded-full px-4 md:px-6 py-3 flex items-center justify-between gap-4 md:gap-16 w-max max-w-[95vw]
         ${scrolled
                     ? 'bg-background/80 backdrop-blur-xl border border-dark/10 shadow-lg'
                     : 'bg-transparent text-background'
@@ -37,7 +37,7 @@ const Navbar = () => {
 
             <button
                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
-                className="bg-accent text-background px-5 py-2 rounded-full font-sans text-sm font-semibold btn-magnetic group"
+                className="bg-accent text-background px-4 md:px-5 py-2 rounded-full font-sans text-xs md:text-sm font-semibold btn-magnetic group whitespace-nowrap shrink-0"
             >
                 <span className="relative z-10 group-hover:text-background transition-colors duration-300">Proponi un progetto</span>
             </button>
