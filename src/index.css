@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-dark font-sans overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .noise-overlay {
+    filter: url(#noiseFilter);
+  }
+
+  /* Magnetic button hover effect setup */
+  .btn-magnetic {
+    @apply relative overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
+  }
+  
+  .btn-magnetic::before {
+    content: '';
+    @apply absolute inset-0 bg-dark w-full h-full translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-0;
+  }
+  
+  .btn-magnetic:hover::before {
+    @apply translate-y-0;
+  }
+  
+  .btn-magnetic:hover {
+    transform: scale(1.03);
+  }
+  
+  .btn-magnetic:active {
+    transform: scale(0.98);
+  }
+
+  .interactive-link {
+    @apply inline-block transition-transform duration-300 hover:-translate-y-[1px];
+  }
+}
+
+/* Hide scrollbar for cleaner look if requested, usually useful for these cinematic designs */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-dark/20 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-dark/40;
+}
