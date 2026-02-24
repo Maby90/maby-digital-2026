@@ -39,7 +39,7 @@ const Navbar = () => {
                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
                 className="bg-accent text-background px-5 py-2 rounded-full font-sans text-sm font-semibold btn-magnetic group"
             >
-                <span className="relative z-10 group-hover:text-background transition-colors duration-300">Proponi Progetto</span>
+                <span className="relative z-10 group-hover:text-background transition-colors duration-300">Proponi un progetto</span>
             </button>
         </nav>
     );

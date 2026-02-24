@@ -59,7 +59,7 @@ const Hero = () => {
                         className="bg-accent text-background px-8 py-4 rounded-full font-sans text-lg font-semibold btn-magnetic group flex items-center gap-3"
                     >
                         <span className="relative z-10 group-hover:text-background transition-colors duration-300">
-                            Proponi un Progetto
+                            Proponi un progetto
                         </span>
                         <svg
                             className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"

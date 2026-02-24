@@ -111,7 +111,7 @@ const ContactModal = () => {
 
                 <div className="p-8 md:p-12 max-h-[90vh] overflow-y-auto">
                     <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary mb-4">
-                        Proponi un <span className="font-drama italic font-light text-accent">Progetto</span>
+                        Proponi un <span className="font-drama italic font-light text-accent">progetto</span>
                     </h2>
 
                     <p className="font-sans text-dark/70 leading-relaxed mb-8 text-sm md:text-base border-l-2 border-accent pl-4 py-1">
