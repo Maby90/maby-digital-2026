@@ -128,31 +128,31 @@ const Protocol = () => {
                     <span className="font-mono text-xs text-dark/40">SISTEMA DI CRESCITA</span>
                 </div>
 
-                <div className="relative w-full max-w-5xl mx-auto h-[70vh] flex items-center justify-center perspective-[1000px]">
+                <div className="relative w-full max-w-5xl mx-auto h-[80vh] md:h-[70vh] flex items-center justify-center perspective-[1000px] mt-12 md:mt-0">
                     {protocols.map((protocol, index) => (
                         <div
                             key={index}
                             ref={(el) => (cardsRef.current[index] = el)}
-                            className="absolute w-full h-full bg-background border border-dark/10 rounded-5xl shadow-xl flex flex-col md:flex-row overflow-hidden will-change-transform z-[1] transform-origin-top"
+                            className="absolute w-full h-full bg-background border border-dark/10 rounded-[2rem] md:rounded-5xl shadow-xl flex flex-col md:flex-row overflow-hidden will-change-transform z-[1] transform-origin-top"
                             // Initially stack them using z-index
                             style={{ zIndex: index }}
                         >
 
                             {/* Animation Side (Visuals) */}
-                            <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#f8f7f4] border-b md:border-b-0 md:border-r border-dark/5 p-8 relative flex items-center justify-center">
+                            <div className="w-full md:w-1/2 h-2/5 md:h-full bg-[#f8f7f4] border-b md:border-b-0 md:border-r border-dark/5 p-6 md:p-8 relative flex items-center justify-center shrink-0">
                                 <protocol.Animation />
-                                <div className="absolute bottom-6 left-6 font-mono text-xs text-dark/30">FIG. {protocol.step}</div>
+                                <div className="absolute bottom-4 left-6 md:bottom-6 font-mono text-xs text-dark/30">FIG. {protocol.step}</div>
                             </div>
 
                             {/* Content Side */}
-                            <div className="w-full md:w-1/2 h-1/2 md:h-full p-8 md:p-16 flex flex-col justify-center">
-                                <div className="font-mono text-5xl md:text-7xl text-dark/10 font-bold mb-4">
+                            <div className="w-full md:w-1/2 h-3/5 md:h-full p-6 md:p-16 flex flex-col justify-center overflow-y-auto">
+                                <div className="font-mono text-4xl md:text-7xl text-dark/10 font-bold mb-2 md:mb-4 shrink-0">
                                     {protocol.step}
                                 </div>
-                                <h3 className="font-heading font-bold text-3xl md:text-4xl text-primary mb-6">
+                                <h3 className="font-heading font-bold text-2xl sm:text-3xl md:text-4xl text-primary mb-3 md:mb-6 shrink-0 leading-tight">
                                     {protocol.title}
                                 </h3>
-                                <p className="font-sans text-dark/70 text-base md:text-lg leading-relaxed">
+                                <p className="font-sans text-dark/70 text-sm sm:text-base md:text-lg leading-relaxed md:leading-relaxed">
                                     {protocol.desc}
                                 </p>
                             </div>
