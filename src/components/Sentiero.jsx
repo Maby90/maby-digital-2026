@@ -8,25 +8,19 @@ const Sentiero = () => {
     const [privacy, setPrivacy] = useState(false);
     const [marketing, setMarketing] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!privacy || !marketing) return;
+    const handleSubmit = (e) => {
+        if (!privacy || !marketing) {
+            e.preventDefault();
+            return;
+        }
 
         setIsSubmitting(true);
-        try {
-            const formData = new FormData(e.target);
-            await fetch(e.target.action, {
-                method: "POST",
-                body: formData,
-                mode: "no-cors"
-            });
+        // The form will natively submit to the hidden iframe.
+        // We simulate a loading state to give the browser time to complete the request.
+        setTimeout(() => {
             setStatus('submitted');
-        } catch (error) {
-            console.error("Subscription error:", error);
-            alert("Si è verificato un errore. Per favore, prova più tardi.");
-        } finally {
             setIsSubmitting(false);
-        }
+        }, 1500);
     };
 
     return (
@@ -74,111 +68,117 @@ const Sentiero = () => {
                             <p className="font-sans text-sm text-dark/60 mb-8">Inserisci i tuoi dati per ricevere le prossime uscite.</p>
 
                             {status === 'idle' ? (
-                                <form
-                                    className="flex flex-col gap-5"
-                                    action="https://assets.mailerlite.com/jsonp/1062356/forms/180365881692390887/subscribe"
-                                    method="post"
-                                    onSubmit={handleSubmit}
-                                >
-                                    <div>
-                                        <label htmlFor="name" className="sr-only">Nome</label>
-                                        <input
-                                            id="name"
-                                            aria-label="name"
-                                            type="text"
-                                            name="fields[name]"
-                                            placeholder="Il tuo nome"
-                                            autoComplete="given-name"
-                                            required
-                                            className="w-full bg-white text-dark placeholder:text-dark/30 border border-dark/10 rounded-xl px-5 py-4 font-sans text-base focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-                                        />
-                                    </div>
+                                <>
+                                    {/* Invisible iframe to absorb the form redirect without changing the page */}
+                                    <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }} title="hidden"></iframe>
 
-                                    <div>
-                                        <label htmlFor="email" className="sr-only">Email</label>
-                                        <input
-                                            id="email"
-                                            aria-label="email"
-                                            aria-required="true"
-                                            type="email"
-                                            name="fields[email]"
-                                            placeholder="La tua migliore email"
-                                            autoComplete="email"
-                                            required
-                                            className="w-full bg-white text-dark placeholder:text-dark/30 border border-dark/10 rounded-xl px-5 py-4 font-sans text-base focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-                                        />
-                                    </div>
-
-                                    {/* Checkboxes */}
-                                    <div className="flex flex-col gap-3 mt-1">
-                                        <label className="flex items-start gap-3 cursor-pointer group">
-                                            <div className="relative flex items-center justify-center mt-1 shrink-0">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={privacy}
-                                                    onChange={(e) => setPrivacy(e.target.checked)}
-                                                    required
-                                                    className="w-4 h-4 appearance-none border border-dark/20 rounded bg-white checked:bg-accent checked:border-accent transition-colors"
-                                                />
-                                                <div className="absolute pointer-events-none opacity-0 group-has-checked:opacity-100 flex items-center justify-center">
-                                                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
-                                                </div>
-                                            </div>
-                                            <span className="text-sm font-sans text-dark/70 leading-snug">
-                                                Ho letto e accetto la <a href="/privacy" className="underline hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.*
-                                            </span>
-                                        </label>
-
-                                        <label className="flex items-start gap-3 cursor-pointer group">
-                                            <div className="relative flex items-center justify-center mt-1 shrink-0">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={marketing}
-                                                    onChange={(e) => setMarketing(e.target.checked)}
-                                                    required
-                                                    className="w-4 h-4 appearance-none border border-dark/20 rounded bg-white checked:bg-accent checked:border-accent transition-colors"
-                                                />
-                                                <div className="absolute pointer-events-none opacity-0 group-has-checked:opacity-100 flex items-center justify-center">
-                                                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
-                                                </div>
-                                            </div>
-                                            <span className="text-sm font-sans text-dark/70 leading-snug">
-                                                Acconsento a ricevere la newsletter e altre comunicazioni via email.*
-                                            </span>
-                                        </label>
-                                    </div>
-
-                                    {/* MailerLite Hidden Fields */}
-                                    <input type="hidden" name="ml-submit" value="1" />
-                                    <input type="hidden" name="anticsrf" value="true" />
-
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className="mt-2 w-full bg-accent text-background px-8 py-4 rounded-xl font-sans text-lg font-bold btn-magnetic group flex items-center justify-center gap-3 shadow-lg shadow-accent/20 hover:shadow-accent/40 disabled:opacity-75 disabled:pointer-events-none"
+                                    <form
+                                        className="flex flex-col gap-5"
+                                        action="https://assets.mailerlite.com/jsonp/1062356/forms/180365881692390887/subscribe"
+                                        method="post"
+                                        target="hidden_iframe"
+                                        onSubmit={handleSubmit}
                                     >
-                                        <span className="relative z-10 group-hover:text-background transition-colors duration-300">
-                                            {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti ora'}
-                                        </span>
-                                        <svg
-                                            className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                        <div>
+                                            <label htmlFor="name" className="sr-only">Nome</label>
+                                            <input
+                                                id="name"
+                                                aria-label="name"
+                                                type="text"
+                                                name="fields[name]"
+                                                placeholder="Il tuo nome"
+                                                autoComplete="given-name"
+                                                required
+                                                className="w-full bg-white text-dark placeholder:text-dark/30 border border-dark/10 rounded-xl px-5 py-4 font-sans text-base focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
                                             />
-                                        </svg>
-                                    </button>
-                                    <p className="text-center font-sans text-xs text-dark/40 mt-2">
-                                        Nessuno spam, promesso. Puoi disiscriverti in qualsiasi momento.
-                                    </p>
-                                </form>
+                                        </div>
+
+                                        <div>
+                                            <label htmlFor="email" className="sr-only">Email</label>
+                                            <input
+                                                id="email"
+                                                aria-label="email"
+                                                aria-required="true"
+                                                type="email"
+                                                name="fields[email]"
+                                                placeholder="La tua migliore email"
+                                                autoComplete="email"
+                                                required
+                                                className="w-full bg-white text-dark placeholder:text-dark/30 border border-dark/10 rounded-xl px-5 py-4 font-sans text-base focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+                                            />
+                                        </div>
+
+                                        {/* Checkboxes */}
+                                        <div className="flex flex-col gap-3 mt-1">
+                                            <label className="flex items-start gap-3 cursor-pointer group">
+                                                <div className="relative flex items-center justify-center mt-1 shrink-0">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={privacy}
+                                                        onChange={(e) => setPrivacy(e.target.checked)}
+                                                        required
+                                                        className="w-4 h-4 appearance-none border border-dark/20 rounded bg-white checked:bg-accent checked:border-accent transition-colors"
+                                                    />
+                                                    <div className="absolute pointer-events-none opacity-0 group-has-checked:opacity-100 flex items-center justify-center">
+                                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                                                    </div>
+                                                </div>
+                                                <span className="text-sm font-sans text-dark/70 leading-snug">
+                                                    Ho letto e accetto la <a href="/privacy" className="underline hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.*
+                                                </span>
+                                            </label>
+
+                                            <label className="flex items-start gap-3 cursor-pointer group">
+                                                <div className="relative flex items-center justify-center mt-1 shrink-0">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={marketing}
+                                                        onChange={(e) => setMarketing(e.target.checked)}
+                                                        required
+                                                        className="w-4 h-4 appearance-none border border-dark/20 rounded bg-white checked:bg-accent checked:border-accent transition-colors"
+                                                    />
+                                                    <div className="absolute pointer-events-none opacity-0 group-has-checked:opacity-100 flex items-center justify-center">
+                                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                                                    </div>
+                                                </div>
+                                                <span className="text-sm font-sans text-dark/70 leading-snug">
+                                                    Acconsento a ricevere la newsletter e altre comunicazioni via email.*
+                                                </span>
+                                            </label>
+                                        </div>
+
+                                        {/* MailerLite Hidden Fields */}
+                                        <input type="hidden" name="ml-submit" value="1" />
+                                        <input type="hidden" name="anticsrf" value="true" />
+
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className="mt-2 w-full bg-accent text-background px-8 py-4 rounded-xl font-sans text-lg font-bold btn-magnetic group flex items-center justify-center gap-3 shadow-lg shadow-accent/20 hover:shadow-accent/40 disabled:opacity-75 disabled:pointer-events-none"
+                                        >
+                                            <span className="relative z-10 group-hover:text-background transition-colors duration-300">
+                                                {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti ora'}
+                                            </span>
+                                            <svg
+                                                className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                />
+                                            </svg>
+                                        </button>
+                                        <p className="text-center font-sans text-xs text-dark/40 mt-2">
+                                            Nessuno spam, promesso. Puoi disiscriverti in qualsiasi momento.
+                                        </p>
+                                    </form>
+                                </>
                             ) : (
                                 <div className="bg-white/50 border border-accent/20 rounded-2xl p-6 text-center animate-fade-in">
                                     <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
