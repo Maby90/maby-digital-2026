@@ -1,5 +1,5 @@
-import { Client } from '@notionhq/client';
-import { NotionToMarkdown } from 'notion-to-md';
+const { Client } = require('@notionhq/client');
+const { NotionToMarkdown } = require('notion-to-md');
 
 export default async function handler(req, res) {
     // Configura i CORS

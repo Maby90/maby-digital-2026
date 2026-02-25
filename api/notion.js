@@ -1,4 +1,4 @@
-import { Client } from '@notionhq/client';
+const { Client } = require('@notionhq/client');
 
 export default async function handler(req, res) {
     // Configura i CORS per permettere al frontend di chiamare l'API anche se separato
