@@ -1,6 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import Navbar from './Navbar';
+import Footer from './Footer';
+
+function toSentenceCase(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
 
 export default function Insights() {
     const [posts, setPosts] = useState([]);
@@ -71,63 +78,71 @@ export default function Insights() {
     }, [loading, posts]);
 
     return (
-        <section className="min-h-screen bg-background pt-32 pb-24 px-6 md:px-12 lg:px-24" ref={containerRef}>
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-16">
-                    <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-7xl text-dark mb-6 tracking-tight">
-                        Insights
-                    </h1>
-                    <p className="font-sans text-xl text-dark/70 max-w-2xl leading-relaxed">
-                        Riflessioni, strategie e visioni sull'evoluzione degli ecosistemi digitali e l'impatto dell'Intelligenza Artificiale.
-                    </p>
-                </div>
+        <div className="relative w-full text-dark bg-background overflow-hidden">
+            <Navbar />
 
-                {loading ? (
-                    <div className="flex justify-center py-20">
-                        <div className="w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+            {/* Elemento decorativo salvia */}
+            <div className="absolute top-0 right-0 w-2/3 h-1/2 bg-primary/5 rounded-bl-[100px] -z-10 pointer-events-none"></div>
+
+            <section className="min-h-screen pt-32 pb-24 px-6 md:px-12 lg:px-24" ref={containerRef}>
+                <div className="max-w-7xl mx-auto">
+                    <div className="mb-16">
+                        <h1 className="insight-card font-heading font-bold text-4xl md:text-5xl lg:text-7xl text-primary mb-6 tracking-tight">
+                            Insights
+                        </h1>
+                        <p className="insight-card font-sans text-xl text-dark/70 max-w-2xl leading-relaxed">
+                            Riflessioni, strategie e visioni sull'evoluzione degli ecosistemi digitali e l'impatto dell'Intelligenza Artificiale.
+                        </p>
                     </div>
-                ) : error && posts.length === 0 ? (
-                    <div className="bg-red-50 text-red-600 p-6 rounded-2xl">
-                        <p>Oops, qualcosa è andato storto nel caricamento degli articoli: {error}</p>
-                    </div>
-                ) : posts.length === 0 ? (
-                    <div className="text-center py-20 border border-dark/10 rounded-3xl bg-dark/5">
-                        <p className="font-sans text-xl text-dark/60">Non ci sono ancora articoli pubblicati.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {posts.map((post) => (
-                            <Link
-                                to={`/insights/${post.slug}`}
-                                key={post.id}
-                                className="insight-card group block p-8 rounded-3xl bg-background border border-dark/10 hover:border-accent/40 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                            >
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {post.tags.map((tag, idx) => (
-                                        <span
-                                            key={idx}
-                                            className="px-3 py-1 text-xs font-semibold rounded-full bg-accent/10 text-accent tracking-wide"
-                                        >
-                                            {tag.name}
+
+                    {loading ? (
+                        <div className="flex justify-center py-20">
+                            <div className="w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                    ) : error && posts.length === 0 ? (
+                        <div className="bg-red-50 text-red-600 p-6 rounded-2xl">
+                            <p>Oops, qualcosa è andato storto nel caricamento degli articoli: {error}</p>
+                        </div>
+                    ) : posts.length === 0 ? (
+                        <div className="text-center py-20 border border-dark/10 rounded-3xl bg-dark/5">
+                            <p className="font-sans text-xl text-dark/60">Non ci sono ancora articoli pubblicati.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {posts.map((post) => (
+                                <Link
+                                    to={`/insights/${post.slug}`}
+                                    key={post.id}
+                                    className="insight-card group block p-8 rounded-3xl bg-background border border-dark/10 hover:border-accent/40 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                >
+                                    <div className="flex flex-wrap gap-2 mb-4">
+                                        {post.tags.map((tag, idx) => (
+                                            <span
+                                                key={idx}
+                                                className="px-3 py-1 text-xs font-semibold rounded-full bg-accent/10 text-accent tracking-wide"
+                                            >
+                                                {tag.name}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <h2 className="font-heading font-bold text-xl md:text-2xl text-primary mb-4 leading-tight group-hover:text-accent transition-colors">
+                                        {toSentenceCase(post.title)}
+                                    </h2>
+
+                                    <div className="flex items-center text-sm font-sans text-dark/50 mt-auto pt-4 border-t border-dark/5">
+                                        <span>{new Date(post.date).toLocaleDateString('it-IT', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                        <span className="ml-auto flex items-center gap-1 font-semibold group-hover:text-accent transition-colors">
+                                            Leggi <span className="text-lg leading-none transform group-hover:translate-x-1 transition-transform">→</span>
                                         </span>
-                                    ))}
-                                </div>
-
-                                <h2 className="font-heading font-bold text-xl md:text-2xl text-dark mb-4 leading-tight group-hover:text-accent transition-colors">
-                                    {post.title}
-                                </h2>
-
-                                <div className="flex items-center text-sm font-sans text-dark/50 mt-auto pt-4 border-t border-dark/5">
-                                    <span>{new Date(post.date).toLocaleDateString('it-IT', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                                    <span className="ml-auto flex items-center gap-1 font-semibold group-hover:text-accent transition-colors">
-                                        Leggi <span className="text-lg leading-none transform group-hover:translate-x-1 transition-transform">→</span>
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </section>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
+            <Footer />
+        </div>
     );
 }
