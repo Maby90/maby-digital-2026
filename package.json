@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@notionhq/client": "^5.9.0",
+    "@notionhq/client": "^2.2.14",
     "@tailwindcss/typography": "^0.5.19",
     "gsap": "^3.14.2",
     "lucide-react": "^0.575.0",
