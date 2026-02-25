@@ -117,15 +117,17 @@ const Protocol = () => {
     }, []);
 
     return (
-        <section className="relative w-full bg-background" id="metodo">
+        <section className="relative w-full bg-background pb-20 md:pb-32" id="metodo">
             {/* We need a tall container to allow scrolling */}
             <div
                 ref={containerRef}
-                className="relative w-full h-[100dvh] overflow-hidden flex items-center justify-center p-6 md:p-12 lg:p-24"
+                className="relative w-full h-[100vh] overflow-hidden flex items-center justify-center p-6 md:p-12 lg:p-24"
             >
-                <div className="absolute top-12 left-6 md:left-12 lg:left-24 z-10 w-full max-w-5xl mx-auto flex items-center justify-between pointer-events-none">
-                    <h2 className="font-heading font-medium text-xl text-primary tracking-widest uppercase">Protocollo</h2>
-                    <span className="font-mono text-xs text-dark/40">SISTEMA DI CRESCITA</span>
+                <div className="absolute top-12 left-0 w-full px-6 md:px-12 lg:px-24 z-10 flex items-center pointer-events-none">
+                    <div className="w-full max-w-5xl mx-auto flex items-center justify-between">
+                        <h2 className="font-heading font-medium text-xl text-primary tracking-widest uppercase">Protocollo</h2>
+                        <span className="font-mono text-xs text-dark/40 shrink-0">SISTEMA DI CRESCITA</span>
+                    </div>
                 </div>
 
                 <div className="relative w-full max-w-5xl mx-auto h-[80vh] md:h-[70vh] flex items-center justify-center perspective-[1000px] mt-12 md:mt-0">
