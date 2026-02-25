@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ThankYou from './components/ThankYou';
+import NotFound from './components/NotFound';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +56,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/grazie" element={<ThankYou />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ContactModal />
     </BrowserRouter>
