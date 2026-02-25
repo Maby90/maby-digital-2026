@@ -4,11 +4,29 @@ import Footer from './Footer';
 
 const Sentiero = () => {
     const [status, setStatus] = useState('idle');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [privacy, setPrivacy] = useState(false);
+    const [marketing, setMarketing] = useState(false);
 
-    // We use a clean native form submission to MailerLite
-    const handleSubmit = () => {
-        setStatus('submitted');
-        // The actual submission is handled natively by the browser to the action URL in a new tab
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!privacy || !marketing) return;
+
+        setIsSubmitting(true);
+        try {
+            const formData = new FormData(e.target);
+            await fetch(e.target.action, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            });
+            setStatus('submitted');
+        } catch (error) {
+            console.error("Subscription error:", error);
+            alert("Si è verificato un errore. Per favore, prova più tardi.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -60,7 +78,6 @@ const Sentiero = () => {
                                     className="flex flex-col gap-5"
                                     action="https://assets.mailerlite.com/jsonp/1062356/forms/180365881692390887/subscribe"
                                     method="post"
-                                    target="_blank"
                                     onSubmit={handleSubmit}
                                 >
                                     <div>
@@ -92,16 +109,56 @@ const Sentiero = () => {
                                         />
                                     </div>
 
+                                    {/* Checkboxes */}
+                                    <div className="flex flex-col gap-3 mt-1">
+                                        <label className="flex items-start gap-3 cursor-pointer group">
+                                            <div className="relative flex items-center justify-center mt-1 shrink-0">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={privacy}
+                                                    onChange={(e) => setPrivacy(e.target.checked)}
+                                                    required
+                                                    className="w-4 h-4 appearance-none border border-dark/20 rounded bg-white checked:bg-accent checked:border-accent transition-colors"
+                                                />
+                                                <div className="absolute pointer-events-none opacity-0 group-has-checked:opacity-100 flex items-center justify-center">
+                                                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                                                </div>
+                                            </div>
+                                            <span className="text-sm font-sans text-dark/70 leading-snug">
+                                                Ho letto e accetto la <a href="/privacy" className="underline hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.*
+                                            </span>
+                                        </label>
+
+                                        <label className="flex items-start gap-3 cursor-pointer group">
+                                            <div className="relative flex items-center justify-center mt-1 shrink-0">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={marketing}
+                                                    onChange={(e) => setMarketing(e.target.checked)}
+                                                    required
+                                                    className="w-4 h-4 appearance-none border border-dark/20 rounded bg-white checked:bg-accent checked:border-accent transition-colors"
+                                                />
+                                                <div className="absolute pointer-events-none opacity-0 group-has-checked:opacity-100 flex items-center justify-center">
+                                                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                                                </div>
+                                            </div>
+                                            <span className="text-sm font-sans text-dark/70 leading-snug">
+                                                Acconsento a ricevere la newsletter e altre comunicazioni via email.*
+                                            </span>
+                                        </label>
+                                    </div>
+
                                     {/* MailerLite Hidden Fields */}
                                     <input type="hidden" name="ml-submit" value="1" />
                                     <input type="hidden" name="anticsrf" value="true" />
 
                                     <button
                                         type="submit"
-                                        className="mt-2 w-full bg-accent text-background px-8 py-4 rounded-xl font-sans text-lg font-bold btn-magnetic group flex items-center justify-center gap-3 shadow-lg shadow-accent/20 hover:shadow-accent/40"
+                                        disabled={isSubmitting}
+                                        className="mt-2 w-full bg-accent text-background px-8 py-4 rounded-xl font-sans text-lg font-bold btn-magnetic group flex items-center justify-center gap-3 shadow-lg shadow-accent/20 hover:shadow-accent/40 disabled:opacity-75 disabled:pointer-events-none"
                                     >
                                         <span className="relative z-10 group-hover:text-background transition-colors duration-300">
-                                            Iscriviti ora
+                                            {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti ora'}
                                         </span>
                                         <svg
                                             className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"
@@ -127,9 +184,9 @@ const Sentiero = () => {
                                     <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                                         <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                                     </div>
-                                    <h4 className="font-heading font-bold text-xl text-primary mb-2">Quasi fatto!</h4>
+                                    <h4 className="font-heading font-bold text-xl text-primary mb-2">Benvenuto a bordo!</h4>
                                     <p className="font-sans text-sm text-dark/70">
-                                        Completa l'iscrizione nella nuova scheda che si è aperta. Ti aspetto su Sentiero!
+                                        La tua iscrizione è confermata! Controlla la posta (e lo spam) per i prossimi aggiornamenti. Ti aspetto su Sentiero!
                                     </p>
                                     <button
                                         onClick={() => setStatus('idle')}
