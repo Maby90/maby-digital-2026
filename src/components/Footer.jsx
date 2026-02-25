@@ -30,7 +30,8 @@ const Footer = () => {
 
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-xs text-background/40">
                     <p>© {new Date().getFullYear()} Maby Prochilo. Tutti i diritti riservati.</p>
-                    <div className="flex items-center gap-6">
+                    <div className="flex flex-wrap justify-center items-center gap-6">
+                        <Link to="/insights" className="hover:text-background transition-colors interactive-link">Insights</Link>
                         <Link to="/sentiero" className="hover:text-background transition-colors interactive-link">Sentiero</Link>
                         <Link to="/privacy" className="hover:text-background transition-colors interactive-link">Privacy Policy</Link>
                         <a href="https://www.linkedin.com/in/maby-prochilo/" className="hover:text-background transition-colors interactive-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>

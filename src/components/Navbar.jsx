@@ -36,6 +36,7 @@ const Navbar = () => {
                 <a href="/#chi-sono" className="interactive-link hover:text-accent transition-colors">Chi sono</a>
                 <a href="/#metodo" className="interactive-link hover:text-accent transition-colors">Metodo</a>
                 <a href="/#servizi" className="interactive-link hover:text-accent transition-colors">Servizi</a>
+                <Link to="/insights" className="interactive-link hover:text-accent transition-colors">Insights</Link>
                 <Link to="/sentiero" className="interactive-link hover:text-accent transition-colors text-accent">Sentiero</Link>
             </div>
 

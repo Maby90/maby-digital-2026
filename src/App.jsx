@@ -16,6 +16,8 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import ThankYou from './components/ThankYou';
 import NotFound from './components/NotFound';
 import Sentiero from './components/Sentiero';
+import Insights from './components/Insights';
+import InsightArticle from './components/InsightArticle';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,6 +60,8 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/grazie" element={<ThankYou />} />
         <Route path="/sentiero" element={<Sentiero />} />
+        <Route path="/insights" element={<Insights />} />
+        <Route path="/insights/:id" element={<InsightArticle />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ContactModal />
