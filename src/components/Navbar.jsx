@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -30,9 +31,10 @@ const Navbar = () => {
             </div>
 
             <div className="hidden md:flex items-center gap-8 font-sans text-sm font-medium">
-                <a href="#chi-sono" className="interactive-link hover:text-accent transition-colors">Chi sono</a>
-                <a href="#metodo" className="interactive-link hover:text-accent transition-colors">Metodo</a>
-                <a href="#servizi" className="interactive-link hover:text-accent transition-colors">Servizi</a>
+                <a href="/#chi-sono" className="interactive-link hover:text-accent transition-colors">Chi sono</a>
+                <a href="/#metodo" className="interactive-link hover:text-accent transition-colors">Metodo</a>
+                <a href="/#servizi" className="interactive-link hover:text-accent transition-colors">Servizi</a>
+                <Link to="/sentiero" className="interactive-link hover:text-accent transition-colors text-accent">Sentiero</Link>
             </div>
 
             <button
