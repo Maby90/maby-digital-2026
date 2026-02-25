@@ -11,13 +11,21 @@ export default function Insights() {
     useEffect(() => {
         async function fetchPosts() {
             try {
-                // Fetch from Vercel Serverless Function
                 const res = await fetch('/api/notion');
                 if (!res.ok) {
-                    throw new Error('Impossibile caricare gli articoli.');
+                    const errorText = await res.text();
+                    console.error("Fetch Error:", errorText);
+                    throw new Error(`Impossibile caricare gli articoli: ${res.status}`);
                 }
                 const data = await res.json();
-                setPosts(data);
+
+                // Ensure tags is always an array to prevent .map undefined errors
+                const formattedData = data.map(post => ({
+                    ...post,
+                    tags: Array.isArray(post.tags) ? post.tags : []
+                }));
+
+                setPosts(formattedData);
             } catch (err) {
                 console.error(err);
                 // Fallback locale nel caso Vite dev non supporti le /api (solo visivo)

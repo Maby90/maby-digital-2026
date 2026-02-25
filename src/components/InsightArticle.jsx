@@ -17,9 +17,16 @@ export default function InsightArticle() {
                 setLoading(true);
                 const res = await fetch(`/api/notion-post?id=${id}`);
                 if (!res.ok) {
-                    throw new Error('Articolo non trovato.');
+                    const errorText = await res.text();
+                    console.error("Fetch Article Error:", errorText);
+                    throw new Error(`Articolo non trovato: ${res.status}`);
                 }
                 const data = await res.json();
+
+                if (data && !Array.isArray(data.tags)) {
+                    data.tags = [];
+                }
+
                 setPost(data);
             } catch (err) {
                 console.error(err);

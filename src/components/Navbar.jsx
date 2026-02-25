@@ -32,7 +32,11 @@ const Navbar = () => {
                 Maby Prochilo
             </Link>
 
-            <div className="hidden md:flex items-center gap-8 font-sans text-sm font-medium">
+            <div className="flex xl:hidden items-center">
+                {/* Mobile menu trigger could goes here, but for now let's just make sure links fit or use a smaller font */}
+            </div>
+
+            <div className="hidden md:flex items-center gap-4 lg:gap-8 font-sans text-sm font-medium">
                 <a href="/#chi-sono" className="interactive-link hover:text-accent transition-colors">Chi sono</a>
                 <a href="/#metodo" className="interactive-link hover:text-accent transition-colors">Metodo</a>
                 <a href="/#servizi" className="interactive-link hover:text-accent transition-colors">Servizi</a>
