@@ -72,7 +72,7 @@ const About = () => {
                     </div>
 
                     <h2 className="about-element font-heading font-bold text-4xl md:text-5xl lg:text-6xl text-primary mb-8 leading-[1.1]">
-                        Costruisco ecosistemi, <br />non campagne isolate.
+                        Costruisco ecosistemi <br />digitali integrati
                     </h2>
 
                     <div className="about-element prose prose-lg prose-slate font-sans text-dark/70 leading-relaxed max-w-none space-y-6">
