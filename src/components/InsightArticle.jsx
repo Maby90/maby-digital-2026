@@ -8,8 +8,20 @@ import Footer from './Footer';
 
 function toSentenceCase(str) {
     if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    const match = str.match(/[a-zA-ZÀ-ÖØ-öø-ÿ]/);
+    if (!match) return str.toLowerCase();
+    const index = match.index;
+    return str.substring(0, index) +
+        str.charAt(index).toUpperCase() +
+        str.substring(index + 1).toLowerCase();
 }
+
+const processMarkdownHeaders = (content) => {
+    if (!content) return '';
+    return content.replace(/^(#{1,6}\s+)([^\n]+)/gm, (match, hashes, text) => {
+        return hashes + toSentenceCase(text);
+    });
+};
 
 export default function InsightArticle() {
     const { id } = useParams();
@@ -131,16 +143,33 @@ export default function InsightArticle() {
 
                     <div className="article-fade prose prose-lg prose-slate prose-headings:font-heading prose-headings:font-bold prose-headings:text-primary prose-p:font-sans prose-p:text-dark/80 prose-a:text-accent prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-dark prose-strong:font-bold prose-li:text-dark/80 max-w-none">
                         <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-                            {post.content}
+                            {processMarkdownHeaders(post.content)}
                         </ReactMarkdown>
                     </div>
 
                     <div className="article-fade mt-20 pt-16 border-t border-primary/20 text-center">
                         <h3 className="font-heading font-bold text-3xl mb-4 text-primary">Vuoi approfondire questo tema?</h3>
                         <p className="font-sans text-dark/80 max-w-lg mx-auto mb-8 text-lg">Scopri come possiamo applicare queste strategie al tuo ecosistema digitale.</p>
-                        <a href="mailto:hello@mprochilo.it" className="btn-primary inline-flex items-center gap-2">
-                            Mettiamoci in contatto
-                        </a>
+                        <button
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-contact'))}
+                            className="bg-accent text-background px-8 py-4 rounded-full font-sans text-lg font-bold btn-magnetic group inline-flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(204,88,51,0.2)] hover:shadow-[0_0_50px_rgba(204,88,51,0.4)] transition-shadow"
+                        >
+                            <span className="relative z-10 group-hover:text-background transition-colors duration-300">
+                                Candidati ora
+                            </span>
+                            <svg
+                                className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform duration-300"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </article>
