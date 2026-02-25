@@ -28,7 +28,7 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 filter: {
                     property: 'Stato',
-                    select: {
+                    status: {
                         equals: 'Pubblicato'
                     }
                 },
