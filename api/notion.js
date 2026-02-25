@@ -55,6 +55,17 @@ export default async function handler(req, res) {
                 title = page.properties.Titolo.title[0].plain_text;
             }
 
+            const slugify = (text) => {
+                return text.toString().toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w\-]+/g, '')
+                    .replace(/\-\-+/g, '-')
+                    .replace(/^-+/, '')
+                    .replace(/-+$/, '');
+            };
+            const generatedSlug = slugify(title);
+
             // Estrai i tags
             let tags = [];
             if (page.properties.Tags && page.properties.Tags.multi_select) {
@@ -72,7 +83,7 @@ export default async function handler(req, res) {
                 title,
                 date,
                 tags,
-                slug: page.id,
+                slug: generatedSlug || page.id,
             };
         });
 
