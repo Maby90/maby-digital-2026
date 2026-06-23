@@ -23,8 +23,8 @@ const items = [
         a: 'Sì, se lavori sulla voce e non sulla quantità. L\'AI scala la ricerca, l\'estrazione, la composizione: la voce umana resta in input (training) e in revisione finale. Il problema dei contenuti AI generici è la pigrizia umana, non il modello.',
     },
     {
-        q: 'Operi solo a Firenze o anche da remoto?',
-        a: 'Sono basata a Firenze ma lavoro al 100% in remoto con clienti in tutta Italia ed Europa. Le call settimanali via Meet/Zoom, gli asset condivisi su Notion.',
+        q: 'Lavori da remoto?',
+        a: 'Sì, al 100% in remoto con clienti in tutta Italia ed Europa. Call settimanali via Meet/Zoom, asset condivisi su Notion.',
     },
 ];
 

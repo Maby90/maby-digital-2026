@@ -176,7 +176,7 @@ const SkillCarosello = () => {
                         </div>
                         <div className="lg:col-span-9 max-w-3xl">
                             <h2 className="font-display font-medium text-3xl md:text-4xl text-fg leading-[1.1] tracking-tightest mb-6">
-                                Sono <span className="text-mint">Maby Prochilo</span>, digital strategist a Firenze.
+                                Sono <span className="text-mint">Maby Prochilo</span>, progetto sistemi AI per aziende.
                             </h2>
                             <p className="text-mute text-base md:text-lg leading-relaxed mb-6">
                                 Lavoro su marketing e AI automation per freelance, PMI e B2B. Su <strong className="text-fg">Oltre il prompt</strong> pubblico ogni settimana una guida operativa: workflow Claude, automazioni n8n, prompt che funzionano, costi reali. Niente curiosity-driven, niente news, niente motivazionale.

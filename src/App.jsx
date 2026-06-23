@@ -14,6 +14,9 @@ import ContactModal from './components/ContactModal';
 import IntroLoader from './components/IntroLoader';
 import CustomCursor from './components/CustomCursor';
 import ScrollFX from './components/ScrollFX';
+import SmoothScroll from './components/SmoothScroll';
+import ScrollProgress from './components/ScrollProgress';
+import Marquee from './components/Marquee';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ThankYou from './components/ThankYou';
 import NotFound from './components/NotFound';
@@ -34,12 +37,14 @@ function Home() {
   return (
     <div className="relative w-full bg-bg text-fg">
       <ScrollFX />
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
         <About />
         <Features />
         <Philosophy />
+        <Marquee />
         <Protocol />
         <Projects />
         <NewsletterPreview />
@@ -54,6 +59,7 @@ function Home() {
 function App() {
   return (
     <BrowserRouter>
+      <SmoothScroll />
       <IntroLoader />
       <CustomCursor />
       <Routes>

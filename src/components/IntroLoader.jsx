@@ -14,15 +14,14 @@ export default function IntroLoader() {
 
   useGSAP(() => {
     if (done) { fireDone(); return; }
-    document.body.style.overflow = 'hidden';
-    const tl = gsap.timeline({
-      onComplete: () => {
-        document.body.style.overflow = '';
-        sessionStorage.setItem('intro-seen', '1');
-        setDone(true);
-        fireDone();
-      },
-    });
+    const finish = () => {
+      sessionStorage.setItem('intro-seen', '1');
+      setDone(true);
+      fireDone();
+    };
+    // Safety: never let the overlay stick, even if a tween target goes missing.
+    const safety = setTimeout(finish, 3000);
+    const tl = gsap.timeline({ onComplete: () => { clearTimeout(safety); finish(); } });
     tl.set('.intro-line', { scaleX: 0, transformOrigin: 'left center' })
       .from('.intro-mark', { autoAlpha: 0, y: 16, filter: 'blur(10px)', duration: 0.55, ease: 'expo.out' })
       .from('.intro-word', { autoAlpha: 0, y: 10, duration: 0.4, ease: 'expo.out', stagger: 0.025 }, '-=0.3')
@@ -51,7 +50,7 @@ export default function IntroLoader() {
           </span>
         </div>
         <div className="intro-line h-px w-48 bg-gradient-to-r from-mint/60 to-transparent" />
-        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-dim">sistemi ai · firenze</span>
+        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-dim">agenti · automazioni · ai</span>
       </div>
     </div>
   );

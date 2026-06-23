@@ -136,10 +136,10 @@ export default function Projects() {
           <div>
             <span className="eyebrow text-mint">Side project</span>
             <h2 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tightest text-fg text-balance" data-split>
-              Roba mia, <span className="text-mint">non dei clienti.</span>
+              Quello che porto <span className="text-mint">avanti io.</span>
             </h2>
             <p className="mt-4 max-w-md text-mute text-sm md:text-base leading-relaxed">
-              Prodotti e business che ho costruito e mando avanti io. Il lavoro sui clienti resta riservato.
+              Prodotti e business che ho costruito e mando avanti in parallelo.
             </p>
           </div>
           <span className="hidden md:block font-mono text-[11px] text-dim">scorri →</span>

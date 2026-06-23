@@ -1,14 +1,13 @@
 import { useGSAP } from '@gsap/react';
 import { gsap, ScrollTrigger, SplitText, EASE, motionOK } from '../lib/gsap';
 
-// Document-wide reveal pass. Robust by design:
-// - Content ships VISIBLE in the DOM/CSS. We only hide an element right before we
-//   own its reveal, and we guarantee it ends visible (onLeaveBack/refresh/safety).
-// - A safety timer forces anything still hidden back to visible, so a missed
-//   trigger (intro lock, layout shift, pinned sections) never ships a blank block.
+// Reveal system built on IntersectionObserver (not ScrollTrigger once-callbacks),
+// so it fires for elements already in view on load, for sections reached via
+// anchor jumps, and while scrolling — no blank blocks, ever. Content ships
+// visible in CSS; we only hide right before we own the reveal.
 //
-// Opt in with data-reveal="<variant>" or a [data-reveal-group] of [data-reveal-item].
-// Variants: up (default), left, right, scale, clip, rotate.
+// Opt in with data-reveal="<variant>", a [data-reveal-group] of [data-reveal-item],
+// data-split (heading word reveal), or data-parallax (scrubbed drift).
 const FROM = {
   up:    { y: 60, autoAlpha: 0, filter: 'blur(14px)' },
   left:  { x: -80, autoAlpha: 0, filter: 'blur(12px)' },
@@ -17,96 +16,89 @@ const FROM = {
   clip:  { autoAlpha: 0, clipPath: 'inset(0 0 100% 0)', y: 30 },
   rotate:{ y: 70, rotateX: -55, autoAlpha: 0, filter: 'blur(14px)', transformPerspective: 900 },
 };
+const TO = { x: 0, y: 0, scale: 1, rotateX: 0, autoAlpha: 1, filter: 'blur(0px)', clipPath: 'inset(0 0 0% 0)' };
 
 export default function ScrollFX() {
   useGSAP(() => {
     if (!motionOK()) return;
 
-    const built = [];
-
-    const build = (el, variant, { delay = 0, dur = 1.1 } = {}) => {
-      const from = FROM[variant] || FROM.up;
-      gsap.set(el, from);
-      const to = { x: 0, y: 0, scale: 1, rotateX: 0, autoAlpha: 1, filter: 'blur(0px)', clipPath: 'inset(0 0 0% 0)', duration: dur, delay, ease: EASE };
-      const st = ScrollTrigger.create({
-        trigger: el,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => gsap.to(el, to),
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        obs.unobserve(el);
+        const tween = el._fxTween;
+        if (tween) tween();
       });
-      built.push({ el });
-      return st;
-    };
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
 
-    gsap.utils.toArray('[data-reveal]').forEach((el) => {
-      build(el, el.dataset.reveal || 'up', { delay: parseFloat(el.dataset.revealDelay || '0') });
+    const register = (el, run) => { el._fxTween = run; io.observe(el); };
+
+    // Single elements
+    gsap.utils.toArray('[data-reveal]:not([data-reveal-group])').forEach((el) => {
+      const v = el.dataset.reveal || 'up';
+      gsap.set(el, FROM[v] || FROM.up);
+      register(el, () => gsap.to(el, { ...TO, duration: 1.05, ease: EASE, delay: parseFloat(el.dataset.revealDelay || '0') }));
     });
 
+    // Staggered groups
     gsap.utils.toArray('[data-reveal-group]').forEach((group) => {
-      const variant = group.dataset.reveal || 'up';
+      const v = group.dataset.reveal || 'up';
       const items = gsap.utils.toArray('[data-reveal-item]', group);
-      items.forEach((el) => gsap.set(el, FROM[variant] || FROM.up));
-      ScrollTrigger.create({
-        trigger: group,
-        start: 'top 84%',
-        once: true,
-        onEnter: () => gsap.to(items, {
-          x: 0, y: 0, scale: 1, rotateX: 0, autoAlpha: 1, filter: 'blur(0px)',
-          duration: 0.95, ease: EASE, stagger: 0.1,
-        }),
-      });
-      items.forEach((el) => built.push({ el }));
+      items.forEach((el) => gsap.set(el, FROM[v] || FROM.up));
+      register(group, () => gsap.to(items, { ...TO, duration: 0.95, ease: EASE, stagger: 0.1 }));
     });
 
-    // Big headings: split into words and reveal with a 3D tip-up stagger.
+    // Split headings: words tip up in 3D
     const splits = [];
     gsap.utils.toArray('[data-split]').forEach((el) => {
       const split = new SplitText(el, { type: 'lines, words', wordsClass: 'fx-word', linesClass: 'fx-line' });
       splits.push(split);
       gsap.set(split.words, { autoAlpha: 0, yPercent: 120, rotateX: -80, transformPerspective: 1000, transformOrigin: 'top center' });
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 82%',
-        once: true,
-        onEnter: () => gsap.to(split.words, {
-          autoAlpha: 1, yPercent: 0, rotateX: 0,
-          duration: 1, ease: EASE, stagger: 0.06,
-        }),
-      });
-      built.push({ el });
+      register(el, () => gsap.to(split.words, { autoAlpha: 1, yPercent: 0, rotateX: 0, duration: 1, ease: EASE, stagger: 0.06 }));
     });
 
-    // Scrubbed parallax: elements drift as the section scrolls through view.
+    // Scrubbed parallax (ScrollTrigger is right for continuous scrub)
     gsap.utils.toArray('[data-parallax]').forEach((el) => {
       const speed = parseFloat(el.dataset.parallax || '0.2');
       gsap.fromTo(el, { yPercent: -speed * 100 }, {
-        yPercent: speed * 100,
-        ease: 'none',
+        yPercent: speed * 100, ease: 'none',
         scrollTrigger: { trigger: el.closest('section') || el, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
       });
     });
 
-    // Refresh once layout settles, and again when the intro unlocks scroll.
     const refresh = () => ScrollTrigger.refresh();
     const t1 = setTimeout(refresh, 350);
     window.addEventListener('load', refresh);
     window.addEventListener('intro-done', refresh);
 
-    // Safety net: nothing stays invisible. If a trigger never fired, force-show.
-    const safety = setTimeout(() => {
-      built.forEach(({ el }) => {
-        if (parseFloat(getComputedStyle(el).opacity) < 0.05) gsap.set(el, { clearProps: 'all' });
+    // Safety net: if IO/layout misbehaves (headless, odd viewport), nothing stays
+    // hidden. Force-reveal anything still invisible shortly after load.
+    const vh = () => window.innerHeight || document.documentElement.clientHeight || 800;
+    const inView = (el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < vh() * 0.95; };
+    const sweep = () => {
+      const all = [
+        ...gsap.utils.toArray('[data-reveal], [data-reveal-item]'),
+        ...gsap.utils.toArray('.fx-word'),
+      ];
+      all.forEach((el) => {
+        if (parseFloat(getComputedStyle(el).opacity) < 0.05 && inView(el)) {
+          gsap.to(el, { ...TO, yPercent: 0, duration: 0.5, ease: EASE });
+        }
       });
-      gsap.utils.toArray('.fx-word').forEach((w) => {
-        if (parseFloat(getComputedStyle(w).opacity) < 0.05) gsap.to(w, { autoAlpha: 1, yPercent: 0, rotateX: 0, duration: 0.4 });
-      });
-      ScrollTrigger.refresh();
-    }, 5000);
+    };
+    // Safety net: reveal anything in view that IO missed (headless/odd viewport),
+    // without pre-revealing below-fold content (keeps the scroll choreography).
+    const safety = setTimeout(sweep, 1800);
+    window.addEventListener('scroll', sweep, { passive: true });
 
     return () => {
       clearTimeout(t1); clearTimeout(safety);
+      io.disconnect();
+      splits.forEach((s) => s.revert());
       window.removeEventListener('load', refresh);
       window.removeEventListener('intro-done', refresh);
+      window.removeEventListener('scroll', sweep);
     };
   });
 
