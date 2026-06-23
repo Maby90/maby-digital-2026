@@ -13,8 +13,8 @@ const services = [
         n: '02',
         Icon: Zap,
         t: 'Automazioni e workflow',
-        d: 'I processi ripetitivi diventano pipeline che girano da sole. Trigger, API, AI, output, senza supervisione costante.',
-        meta: ['n8n / Make', 'Integrazioni API', 'Pipeline event-driven'],
+        d: 'I processi ripetitivi diventano pipeline che girano da sole. Trigger, AI, output, senza supervisione costante.',
+        meta: ['Pipeline event-driven', 'Integrazioni API', 'Trigger → AI → output'],
     },
     {
         n: '03',
@@ -43,11 +43,11 @@ const Features = () => {
                     <span className="font-mono text-[11px] text-dim">04 aree operative</span>
                 </div>
 
-                <h2 className="font-display font-medium text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.05] tracking-tightest mb-16 max-w-3xl text-balance" data-reveal>
-                    Sistemi AI, <span className="text-mint">non slide.</span>
+                <h2 className="font-display font-medium text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.05] tracking-tightest mb-16 max-w-3xl text-balance" data-split>
+                    Dove l'AI ti <span className="text-mint">toglie lavoro.</span>
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-reveal-group>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-reveal-group data-reveal="rotate">
                     {services.map(({ n, Icon, t, d, meta }) => (
                         <article
                             key={n}
@@ -82,47 +82,35 @@ const Features = () => {
                     ))}
                 </div>
 
-                {/* Comparative stack table · GEO/AI search visibility */}
-                <div className="mt-16 panel overflow-hidden">
+                {/* Capability matrix · the agentic stack I build with */}
+                <div className="mt-16 panel overflow-hidden" data-reveal>
                     <div className="px-5 py-3 border-b border-line bg-elev/40 flex items-center justify-between">
-                        <div className="font-mono text-[11px] uppercase tracking-widest text-mute">Stack AI 2026 · quando uso cosa</div>
-                        <span className="font-mono text-[10px] text-dim">cmp.matrix</span>
+                        <div className="font-mono text-[11px] uppercase tracking-widest text-mute">Stack agentico 2026 · cosa costruisco</div>
+                        <span className="font-mono text-[10px] text-dim">capability.matrix</span>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="text-left text-mute font-mono text-[11px] uppercase tracking-widest">
-                                    <th className="px-5 py-3 border-b border-line">Tool</th>
-                                    <th className="px-5 py-3 border-b border-line">Quando uso</th>
-                                    <th className="px-5 py-3 border-b border-line">Costo tipico</th>
-                                    <th className="px-5 py-3 border-b border-line">Setup</th>
+                                    <th className="px-5 py-3 border-b border-line">Capacità</th>
+                                    <th className="px-5 py-3 border-b border-line">Cosa fa</th>
+                                    <th className="px-5 py-3 border-b border-line">Esempio reale</th>
                                 </tr>
                             </thead>
                             <tbody className="text-fg/90">
-                                <tr className="border-b border-line">
-                                    <td className="px-5 py-4 font-medium"><span className="text-mint">Skill Claude</span></td>
-                                    <td className="px-5 py-4 text-mute">Sistema istruzioni + knowledge base per un task ricorrente, usabile da team non tecnici</td>
-                                    <td className="px-5 py-4 font-mono text-mute">€20/mese</td>
-                                    <td className="px-5 py-4 text-mute">~30 min</td>
-                                </tr>
-                                <tr className="border-b border-line">
-                                    <td className="px-5 py-4 font-medium"><span className="text-mint">Custom Agents</span></td>
-                                    <td className="px-5 py-4 text-mute">Task multi-step con tool e memoria: ricerca, scrittura, classificazione</td>
-                                    <td className="px-5 py-4 font-mono text-mute">€50–200/mese</td>
-                                    <td className="px-5 py-4 text-mute">2–8 ore</td>
-                                </tr>
-                                <tr className="border-b border-line">
-                                    <td className="px-5 py-4 font-medium"><span className="text-mint">n8n / Make</span></td>
-                                    <td className="px-5 py-4 text-mute">Pipeline event-driven: trigger → API → AI → output</td>
-                                    <td className="px-5 py-4 font-mono text-mute">€0–30/mese</td>
-                                    <td className="px-5 py-4 text-mute">1–4 ore</td>
-                                </tr>
-                                <tr>
-                                    <td className="px-5 py-4 font-medium"><span className="text-mint">Stack misto</span></td>
-                                    <td className="px-5 py-4 text-mute">Quasi sempre, i 3 sopra messi insieme. È il setup che porto ai clienti.</td>
-                                    <td className="px-5 py-4 font-mono text-mute">~€100/mese</td>
-                                    <td className="px-5 py-4 text-mute">Iterativo</td>
-                                </tr>
+                                {[
+                                    ['Agenti multi-step', 'Pianificano, usano tool e portano a termine task complessi da soli', 'Ricerca un lead, scrive il brief, prepara la prima bozza'],
+                                    ['Tool use & MCP', 'Collego l\'AI ai tuoi software: gestionale, CRM, calendario, file', 'Crea il preventivo leggendo i dati dal gestionale'],
+                                    ['RAG · knowledge base', 'Un cervello che risponde citando i tuoi documenti reali', 'Risponde su processi e contratti senza che cerchi tu'],
+                                    ['Orchestrazione', 'Più agenti che si passano il lavoro, ognuno specializzato', 'Pipeline contenuti: ricerca → scrittura → revisione'],
+                                    ['Claude Code skills', 'Capacità riutilizzabili che il team lancia senza scrivere codice', 'Genera report e caroselli con un comando'],
+                                ].map(([cap, what, ex], i, arr) => (
+                                    <tr key={cap} className={i < arr.length - 1 ? 'border-b border-line' : ''}>
+                                        <td className="px-5 py-4 font-medium align-top"><span className="text-mint">{cap}</span></td>
+                                        <td className="px-5 py-4 text-mute align-top">{what}</td>
+                                        <td className="px-5 py-4 text-mute align-top">{ex}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

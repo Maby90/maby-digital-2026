@@ -30,9 +30,9 @@ const Navbar = () => {
             className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${scrolled ? 'border-b border-line bg-bg/80 backdrop-blur-xl' : 'border-b border-transparent'}`}
         >
             <nav className="container-edge flex items-center justify-between h-14">
-                <Link to="/" className="flex items-center gap-2 group">
-                    <span className="w-7 h-7 rounded-md bg-mint/15 border border-mint/30 flex items-center justify-center font-mono text-[13px] font-bold text-mint">m</span>
-                    <span className="font-medium tracking-tight text-fg">Maby Prochilo</span>
+                <Link to="/" className="flex items-center gap-2 group shrink-0">
+                    <span className="w-7 h-7 shrink-0 rounded-md bg-mint/15 border border-mint/30 grid place-items-center font-mono text-[13px] leading-none font-bold text-mint">m</span>
+                    <span className="font-medium tracking-tight text-fg leading-none whitespace-nowrap">Maby Prochilo</span>
                 </Link>
 
                 <div className="hidden md:flex items-center gap-1 text-sm">

@@ -105,14 +105,10 @@
   /* SplitText: mask words so chars rise from behind a clean edge */
   .hero-word { overflow: hidden; padding-bottom: 0.08em; }
   .hero-char { display: inline-block; will-change: transform, filter; }
+  .fx-line { overflow: hidden; padding-bottom: 0.12em; }
+  .fx-word { display: inline-block; will-change: transform; }
 
-  /* Custom cursor: hide the native cursor on fine-pointer devices when active */
-  html.has-custom-cursor,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor [data-cursor],
-  html.has-custom-cursor input,
-  html.has-custom-cursor textarea { cursor: none; }
+  /* Custom cursor is additive: the native cursor stays visible. */
 
   /* Animated sweep border for emphasis on hover */
   .sweep-border { position: relative; }

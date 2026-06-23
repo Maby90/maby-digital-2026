@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
-import { gsap, SplitText, EASE, motionOK } from '../lib/gsap';
+import { gsap, ScrollTrigger, SplitText, EASE, motionOK } from '../lib/gsap';
 import PromptBox from './PromptBox';
 import HeroBackdrop from './HeroBackdrop';
 import Magnetic from './Magnetic';
@@ -50,6 +50,16 @@ const Hero = () => {
             });
         });
 
+        // Scroll-out: hero content lifts and fades as you leave it (depth).
+        gsap.to('.hero-copy', {
+            yPercent: -18, autoAlpha: 0, ease: 'none',
+            scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 },
+        });
+        gsap.to('.hero-demo', {
+            yPercent: 12, ease: 'none',
+            scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 },
+        });
+
         return () => split.revert();
     }, { scope: root });
 
@@ -70,7 +80,7 @@ const Hero = () => {
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-                    <div className="lg:col-span-7">
+                    <div className="hero-copy lg:col-span-7">
                         <h1 className="hero-title font-display font-medium text-5xl sm:text-6xl md:text-7xl lg:text-[84px] leading-[0.98] tracking-tightest text-fg text-balance">
                             Sistemi AI che lavorano <span className="text-mint">per la tua azienda.</span>
                         </h1>

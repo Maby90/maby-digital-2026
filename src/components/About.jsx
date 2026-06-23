@@ -35,9 +35,8 @@ const About = () => {
                             <span className="h-px flex-1 bg-line" />
                         </div>
 
-                        <h2 className="font-display font-medium text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.05] tracking-tightest text-balance" data-reveal>
-                            Progetto sistemi AI, <br/>
-                            <span className="text-mint">non vetrine</span>
+                        <h2 className="font-display font-medium text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.05] tracking-tightest text-balance" data-split>
+                            Progetto sistemi AI, <span className="text-mint">non vetrine</span>
                         </h2>
 
                         <div className="mt-10 space-y-6 text-mute text-base md:text-lg leading-relaxed max-w-prose">
@@ -55,7 +54,7 @@ const About = () => {
                             </p>
                         </div>
 
-                        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4" data-reveal-group>
+                        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4" data-reveal-group data-reveal="rotate">
                             {[
                                 ['Agenti', 'AI che esegue task reali'],
                                 ['Flussi', 'Automazioni che girano da sole'],

@@ -15,9 +15,8 @@ const Action = () => {
                         Ready to deploy
                     </span>
 
-                    <h2 className="font-display font-medium text-5xl md:text-7xl lg:text-[88px] leading-[0.98] tracking-tightest text-fg text-balance" data-reveal>
-                        Mettiamo l'AI<br/>
-                        <span className="text-mint">a lavorare?</span>
+                    <h2 className="font-display font-medium text-5xl md:text-7xl lg:text-[88px] leading-[0.98] tracking-tightest text-fg text-balance" data-split>
+                        Mettiamo l'AI <span className="text-mint">a lavorare?</span>
                     </h2>
 
                     <p className="mt-8 text-mute text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-balance" data-reveal>

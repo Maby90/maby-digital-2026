@@ -21,13 +21,12 @@ const Philosophy = () => {
                         <span className="text-fg">chatbot che fingono di essere persone, demo che non reggono la produzione.</span>
                     </p>
 
-                    <h2 className="font-display font-medium text-4xl md:text-6xl lg:text-7xl xl:text-[88px] leading-[1.02] tracking-tightest text-fg text-balance" data-reveal>
-                        Io costruisco AI<br/>
-                        che lavora nel <span className="text-mint">backend.</span>
+                    <h2 className="font-display font-medium text-4xl md:text-6xl lg:text-7xl xl:text-[88px] leading-[1.02] tracking-tightest text-fg text-balance" data-split>
+                        Io costruisco AI che lavora nel <span className="text-mint">backend.</span>
                     </h2>
 
                     {/* Principles */}
-                    <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl" data-reveal-group>
+                    <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl" data-reveal-group data-reveal="scale">
                         {[
                             ['P.01', 'Competenza prima dello strumento', 'L\'AI la amplifica, non la sostituisce.'],
                             ['P.02', 'AI nel backend', 'Non in vetrina. Lavora, non recita.'],

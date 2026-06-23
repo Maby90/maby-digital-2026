@@ -101,6 +101,15 @@ export default function Projects() {
     const getScroll = () => trackEl.scrollWidth - trackEl.clientWidth;
     if (getScroll() <= 0) return;
 
+    const focus = () => {
+      const cx = window.innerWidth / 2;
+      cards.forEach((c) => {
+        const r = c.getBoundingClientRect();
+        const d = Math.abs((r.left + r.width / 2) - cx) / window.innerWidth;
+        gsap.set(c, { scale: gsap.utils.clamp(0.9, 1, 1 - d * 0.25), opacity: gsap.utils.clamp(0.45, 1, 1 - d * 0.9) });
+      });
+    };
+
     gsap.to(trackEl, {
       x: () => -getScroll(),
       ease: 'none',
@@ -112,8 +121,11 @@ export default function Projects() {
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        onUpdate: focus,
+        onRefresh: focus,
       },
     });
+    focus();
   }, { scope: section });
 
   return (
@@ -122,10 +134,13 @@ export default function Projects() {
       <div className="container-edge relative">
         <div className="mb-10 flex items-end justify-between gap-4">
           <div>
-            <span className="eyebrow text-mint">Progetti</span>
-            <h2 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tightest text-fg text-balance">
-              Cose che ho <span className="text-mint">costruito.</span>
+            <span className="eyebrow text-mint">Side project</span>
+            <h2 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tightest text-fg text-balance" data-split>
+              Roba mia, <span className="text-mint">non dei clienti.</span>
             </h2>
+            <p className="mt-4 max-w-md text-mute text-sm md:text-base leading-relaxed">
+              Prodotti e business che ho costruito e mando avanti io. Il lavoro sui clienti resta riservato.
+            </p>
           </div>
           <span className="hidden md:block font-mono text-[11px] text-dim">scorri →</span>
         </div>

@@ -35,10 +35,10 @@ const Protocol = () => {
             scrollTrigger: { trigger: root_, start: 'top 80%', once: true },
         });
 
-        gsap.utils.toArray('.proto-step', root_).forEach((el) => {
+        gsap.utils.toArray('.proto-step', root_).forEach((el, i) => {
             gsap.from(el, {
-                autoAlpha: 0, y: 36, filter: 'blur(12px)', duration: 0.9, ease: EASE,
-                scrollTrigger: { trigger: el, start: 'top 82%', once: true },
+                autoAlpha: 0, x: i % 2 === 0 ? -70 : 70, y: 30, filter: 'blur(12px)', duration: 1, ease: EASE,
+                scrollTrigger: { trigger: el, start: 'top 84%', once: true },
             });
         });
 

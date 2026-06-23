@@ -5,27 +5,30 @@ import { gsap, motionOK } from '../lib/gsap';
 // First-load reveal: a full-screen panel with the "m" mark and a drawing line,
 // then a mask-wipe up that uncovers the page. Runs once per session; skipped
 // entirely under reduced-motion (page is shown immediately).
+const fireDone = () => window.dispatchEvent(new Event('intro-done'));
+
 export default function IntroLoader() {
   const seen = typeof window !== 'undefined' && sessionStorage.getItem('intro-seen');
   const [done, setDone] = useState(Boolean(seen) || !motionOK());
   const root = useRef(null);
 
   useGSAP(() => {
-    if (done) return;
+    if (done) { fireDone(); return; }
     document.body.style.overflow = 'hidden';
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.style.overflow = '';
         sessionStorage.setItem('intro-seen', '1');
         setDone(true);
+        fireDone();
       },
     });
     tl.set('.intro-line', { scaleX: 0, transformOrigin: 'left center' })
-      .from('.intro-mark', { autoAlpha: 0, y: 18, filter: 'blur(12px)', duration: 0.8, ease: 'expo.out' })
-      .from('.intro-word', { autoAlpha: 0, y: 12, duration: 0.6, ease: 'expo.out', stagger: 0.04 }, '-=0.4')
-      .to('.intro-line', { scaleX: 1, duration: 0.7, ease: 'power3.inOut' }, '-=0.3')
-      .to('.intro-content', { autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, '+=0.25')
-      .to(root.current, { yPercent: -100, duration: 0.9, ease: 'expo.inOut' }, '-=0.1');
+      .from('.intro-mark', { autoAlpha: 0, y: 16, filter: 'blur(10px)', duration: 0.55, ease: 'expo.out' })
+      .from('.intro-word', { autoAlpha: 0, y: 10, duration: 0.4, ease: 'expo.out', stagger: 0.025 }, '-=0.3')
+      .to('.intro-line', { scaleX: 1, duration: 0.5, ease: 'power3.inOut' }, '-=0.25')
+      .to('.intro-content', { autoAlpha: 0, duration: 0.3, ease: 'power2.in' }, '+=0.15')
+      .to(root.current, { yPercent: -100, duration: 0.7, ease: 'expo.inOut' }, '-=0.05');
   }, { scope: root, dependencies: [done] });
 
   if (done) return null;
