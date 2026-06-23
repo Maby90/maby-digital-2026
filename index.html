@@ -1,8 +1,20 @@
 <!doctype html>
-<html lang="it">
+<html lang="it" class="light">
 
 <head>
   <meta charset="UTF-8" />
+  <!-- Theme bootstrap (avoid FOUC for light/dark choice) -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var mode = saved === 'dark' ? 'dark' : 'light';
+        var html = document.documentElement;
+        html.classList.remove('dark', 'light');
+        html.classList.add(mode);
+      } catch(_){}
+    })();
+  </script>
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
       w[l] = w[l] || []; w[l].push({
@@ -13,55 +25,143 @@
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-KVPFDX49');</script>
   <!-- End Google Tag Manager -->
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1540181590866889');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1540181590866889&ev=PageView&noscript=1" /></noscript>
+
+  <!-- Preconnect critical 3rd parties -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+  <link rel="preconnect" href="https://oltreilprompt.substack.com" crossorigin>
+  <link rel="dns-prefetch" href="https://substackcdn.com">
+
   <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23CC5833'/><text x='50%' y='55%' alignment-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='50' fill='%23F2F0E9'>MP</text></svg>" />
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%230A0A0B'/><text x='50%' y='62%' text-anchor='middle' font-family='ui-monospace,monospace' font-weight='700' font-size='52' fill='%236EE7B7'>m</text></svg>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maby Prochilo | Digital Strategist</title>
+  <meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)" />
+
+  <title>Maby Prochilo · Sistemi AI per aziende: agenti, automazioni, Claude Code</title>
   <meta name="description"
-    content="Costruisco ecosistemi digitali integrati. Strategia e posizionamento per liberi professionisti e aziende." />
+    content="Progetto e installo sistemi AI per freelance, PMI e team B2B: agenti, automazioni e skill su Claude Code che tolgono lavoro ripetitivo. Con un occhio al marketing." />
   <meta name="keywords"
-    content="digital strategist, consulente marketing, posizionamento brand, acquisizione clienti, maby prochilo" />
+    content="sistemi ai per aziende, agenti ai, automazioni ai, claude code, n8n automazioni, knowledge base ai, ai automation italia, consulente ai b2b, workflow ai, oltre il prompt, maby prochilo" />
+  <meta name="author" content="Maby Prochilo" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://mprochilo.it/" />
 
-  <!-- Open Graph / Facebook / LinkedIn -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="Maby Prochilo" />
   <meta property="og:url" content="https://mprochilo.it/" />
-  <meta property="og:title" content="Maby Prochilo | Digital Strategist" />
+  <meta property="og:title" content="Maby Prochilo · Sistemi AI per aziende: agenti, automazioni, Claude Code" />
   <meta property="og:description"
-    content="Costruisco ecosistemi digitali integrati. Strategia e posizionamento per liberi professionisti e aziende." />
-  <meta property="og:image" content="https://mprochilo.it/og-image.jpg" />
+    content="Progetto e installo agenti, automazioni e skill su Claude Code che tolgono lavoro ripetitivo a freelance, PMI e team B2B. Con un occhio al marketing." />
+  <meta property="og:image" content="https://mprochilo.it/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://mprochilo.it/" />
-  <meta property="twitter:title" content="Maby Prochilo | Digital Strategist" />
-  <meta property="twitter:description"
-    content="Costruisco ecosistemi digitali integrati. Strategia e posizionamento per liberi professionisti e aziende." />
-  <meta property="twitter:image" content="https://mprochilo.it/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://mprochilo.it/" />
+  <meta name="twitter:title" content="Maby Prochilo · Sistemi AI per aziende: agenti, automazioni, Claude Code" />
+  <meta name="twitter:description"
+    content="Agenti, automazioni e skill su Claude Code che tolgono lavoro ripetitivo. Con un occhio al marketing." />
+  <meta name="twitter:image" content="https://mprochilo.it/og-image.png" />
 
-  <!-- Google Fonts for "Organic Tech" Preset -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Outfit:wght@100..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700&display=swap"
-    rel="stylesheet">
+  <!-- Fonts: Geist + Geist Mono self-hosted via @fontsource (bundled) -->
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://mprochilo.it/#person",
+        "name": "Maby Prochilo",
+        "url": "https://mprochilo.it/",
+        "image": "https://mprochilo.it/maby-profile.jpg",
+        "jobTitle": "AI Systems Consultant",
+        "description": "Progetto e installo sistemi AI per aziende: agenti, automazioni e skill su Claude Code per freelance, PMI e team B2B. Con un background in marketing.",
+        "email": "mailto:hello@mprochilo.it",
+        "sameAs": [
+          "https://www.linkedin.com/in/maby-prochilo/",
+          "https://oltreilprompt.substack.com/"
+        ],
+        "knowsAbout": [
+          "AI Agents",
+          "AI Automation",
+          "Claude Code",
+          "Workflow Automation",
+          "Knowledge Base AI",
+          "Digital Marketing"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://mprochilo.it/#website",
+        "url": "https://mprochilo.it/",
+        "name": "Maby Prochilo",
+        "description": "Sistemi AI per aziende: agenti, automazioni, Claude Code",
+        "publisher": { "@id": "https://mprochilo.it/#person" },
+        "inLanguage": "it-IT"
+      },
+      {
+        "@type": ["ProfessionalService", "LocalBusiness"],
+        "@id": "https://mprochilo.it/#service",
+        "name": "Maby Prochilo · Digital Strategy & AI Marketing",
+        "url": "https://mprochilo.it/",
+        "image": "https://mprochilo.it/og-image.png",
+        "email": "hello@mprochilo.it",
+        "priceRange": "€800-€3000",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Firenze",
+          "addressRegion": "Toscana",
+          "addressCountry": "IT"
+        },
+        "areaServed": [
+          { "@type": "Country", "name": "Italy" },
+          { "@type": "Place", "name": "Europe" }
+        ],
+        "serviceType": [
+          "Digital Strategy Consulting",
+          "AI Marketing Workflows",
+          "Personal Branding",
+          "Marketing Automation",
+          "Custom AI Agents"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servizi",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategia di posizionamento", "description": "Audit del brand, definizione della voce, costruzione di un personal brand riconoscibile." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Acquisizione clienti B2B", "description": "Sistemi di lead generation prevedibili: outbound mirato, content che converte, funnel privi di friction." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Workflow AI applicati", "description": "Integrazione di modelli AI dentro i processi di marketing, scrittura, ricerca." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consulenza strategica continuativa", "description": "Affianco founder e team in retainer mensile: review, sparring partner, esecuzione condivisa." } }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
-<body class="bg-background text-dark font-sans antialiased">
-  <!-- Google Tag Manager (noscript) -->
+<body class="bg-bg text-fg font-sans antialiased">
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KVPFDX49" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <!-- SVG Noise Filter Definition -->
-  <svg style="display:none;">
-    <filter id="noiseFilter">
-      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-    </filter>
-  </svg>
-  <div id="noise-overlay" class="pointer-events-none fixed inset-0 z-50 opacity-5 mix-blend-overlay"
-    style="filter: url(#noiseFilter);"></div>
-
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

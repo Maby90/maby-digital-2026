@@ -1,167 +1,103 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, EASE, motionOK } from '../lib/gsap';
 
 const protocols = [
     {
-        step: "01",
-        title: "Audit & Identità",
-        desc: "Analisi profonda del tuo posizionamento attuale e definizione dell'architettura di personal brand. Creiamo fondamenta inattaccabili basate sull'autenticità.",
-        Animation: () => (
-            <div className="relative w-full h-full flex items-center justify-center">
-                {/* A simple morphing/rotating organic DNA-like loop */}
-                <div className="absolute w-40 h-40 rounded-full border border-dark/20 flex items-center justify-center animate-[spin_10s_linear_infinite]">
-                    <div className="w-4 h-4 rounded-full bg-accent/40 absolute top-[-8px]"></div>
-                    <div className="w-4 h-4 rounded-full bg-primary/40 absolute bottom-[-8px]"></div>
-                </div>
-                <div className="absolute w-24 h-24 rounded-full border border-dark/30 flex items-center justify-center animate-[spin_7s_linear_infinite_reverse]">
-                    <div className="w-3 h-3 rounded-full bg-accent/60 absolute right-[-6px]"></div>
-                    <div className="w-3 h-3 rounded-full bg-primary/60 absolute left-[-6px]"></div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-dark flex items-center justify-center">
-                    <div className="w-2 h-2 rounded-full bg-background animate-pulse"></div>
-                </div>
-            </div>
-        )
+        n: '01',
+        t: 'Audit e mappatura',
+        d: 'Guardo come lavori davvero: dove si perde tempo, quali task sono ripetuti, dove l\'AI ha senso e dove no. Niente AI per moda, solo dove libera ore vere.',
+        out: ['process_map.md', 'bottlenecks.md', 'ai_opportunities.md'],
     },
     {
-        step: "02",
-        title: "Ingegneria dell'acquisizione",
-        desc: "Sviluppo di sistemi di acquisizione clienti prevedibili e scalabili. Progettiamo flussi che convertono l'attenzione in relazioni di valore.",
-        Animation: () => (
-            <div className="relative w-full h-full flex items-center justify-center flex-col gap-4 overflow-hidden">
-                {/* Simple scanning laser grid */}
-                <div className="w-32 h-32 relative border border-dark/10 bg-dark/5 rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.05)_50%)] bg-[length:100%_4px]"></div>
-                    <div className="absolute w-full h-1 bg-accent/80 shadow-[0_0_8px_2px_rgba(204,88,51,0.5)] top-0 left-0 animate-[shuffler_3s_ease-in-out_infinite_alternate]"></div>
-                </div>
-            </div>
-        )
+        n: '02',
+        t: 'Progettazione del sistema',
+        d: 'Disegno e costruisco la soluzione: agenti, automazioni e skill su Claude Code, con la persona sempre come punto di controllo. Iterazione su casi reali, non demo.',
+        out: ['custom_agents/*', 'workflows.n8n', 'knowledge_base.notion'],
     },
     {
-        step: "03",
-        title: "Ecosistema AI automatizzato",
-        desc: "Integrazione di modelli AI per automatizzare l'operatività a basso valore aggiunto, moltiplicando la tua produttività senza sacrificare la qualità.",
-        Animation: () => (
-            <div className="relative w-full h-full flex items-center justify-center">
-                {/* Pulsing waveform SVG */}
-                <svg viewBox="0 0 100 40" className="w-48 h-20 overflow-visible">
-                    <path
-                        d="M0,20 L15,20 L20,5 L25,35 L30,20 L45,20 L50,10 L55,30 L60,20 L80,20 L85,15 L90,25 L95,20 L100,20"
-                        fill="none"
-                        stroke="#CC5833"
-                        strokeWidth="1.5"
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        className="opacity-80"
-                        strokeDasharray="150"
-                        strokeDashoffset="150"
-                    >
-                        <animate attributeName="stroke-dashoffset" values="150;0;-150" dur="4s" repeatCount="indefinite" />
-                    </path>
-                    <circle cx="50" cy="20" r="2" fill="#2E4036" className="animate-pulse" />
-                </svg>
-            </div>
-        )
-    }
+        n: '03',
+        t: 'Integrazione e handoff',
+        d: 'Il sistema entra nei tuoi strumenti e il team impara a usarlo. Ti lascio documentazione e controllo, così resta tuo anche quando io non ci sono.',
+        out: ['handoff_docs.md', 'team_training.pdf', 'maintenance_plan.md'],
+    },
 ];
 
 const Protocol = () => {
-    const containerRef = useRef(null);
-    const cardsRef = useRef([]);
+    const root = useRef(null);
 
-    useLayoutEffect(() => {
-        // Pinning and Stacking logic using a single master timeline
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top top",
-                    end: `+=${window.innerHeight * protocols.length}`,
-                    scrub: true,
-                    pin: true,
-                }
+    useGSAP(() => {
+        if (!motionOK()) return;
+        const root_ = root.current;
+
+        gsap.from('.proto-head', {
+            autoAlpha: 0, y: 28, filter: 'blur(10px)', duration: 1, ease: EASE,
+            scrollTrigger: { trigger: root_, start: 'top 80%', once: true },
+        });
+
+        gsap.utils.toArray('.proto-step', root_).forEach((el) => {
+            gsap.from(el, {
+                autoAlpha: 0, y: 36, filter: 'blur(12px)', duration: 0.9, ease: EASE,
+                scrollTrigger: { trigger: el, start: 'top 82%', once: true },
             });
+        });
 
-            // Animate each card except the first one coming in
-            cardsRef.current.forEach((card, index) => {
-                if (index === 0) return; // First card is already visible
-
-                const prevCard = cardsRef.current[index - 1];
-
-                // The incoming card moves up into view
-                tl.fromTo(card,
-                    { y: window.innerHeight },
-                    { y: 0, ease: "none" },
-                    index // Use index as the position parameter to sequence them properly
-                );
-
-                // The previous card scales down and blurs at the same time
-                tl.to(prevCard,
-                    {
-                        scale: 0.9,
-                        opacity: 0.5,
-                        filter: "blur(10px)",
-                        y: -20,
-                        ease: "none"
-                    },
-                    index
-                );
+        // progress line draws as you scroll the section
+        const line = root_.querySelector('.proto-progress');
+        if (line) {
+            gsap.fromTo(line, { scaleY: 0 }, {
+                scaleY: 1, transformOrigin: 'top center', ease: 'none',
+                scrollTrigger: { trigger: '.proto-list', start: 'top 70%', end: 'bottom 70%', scrub: 0.6 },
             });
-
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
+        }
+    }, { scope: root });
 
     return (
-        <section className="relative w-full bg-background pb-20 md:pb-32" id="metodo">
-            {/* We need a tall container to allow scrolling */}
-            <div
-                ref={containerRef}
-                className="relative w-full h-[100vh] overflow-hidden flex items-center justify-center p-6 md:p-12 lg:p-24"
-            >
-                <div className="absolute top-12 left-0 w-full px-6 md:px-12 lg:px-24 z-10 flex items-center pointer-events-none">
-                    <div className="w-full max-w-5xl mx-auto flex items-center justify-between">
-                        <h2 className="font-heading font-medium text-xl text-primary tracking-widest uppercase">Protocollo</h2>
-                        <span className="font-mono text-xs text-dark/40 shrink-0">SISTEMA DI CRESCITA</span>
-                    </div>
+        <section id="metodo" ref={root} className="relative bg-surface/40 py-24 md:py-32 border-t border-line">
+            <div className="container-edge">
+                <div className="proto-head flex items-center gap-3 mb-10">
+                    <span className="eyebrow">// 04 · Metodo</span>
+                    <span className="h-px flex-1 bg-line" />
+                    <span className="font-mono text-[11px] text-dim">dall'audit all'handoff</span>
                 </div>
 
-                <div className="relative w-full max-w-5xl mx-auto h-[80vh] md:h-[70vh] flex items-center justify-center perspective-[1000px] mt-12 md:mt-0">
-                    {protocols.map((protocol, index) => (
-                        <div
-                            key={index}
-                            ref={(el) => (cardsRef.current[index] = el)}
-                            className="absolute w-full h-full bg-background border border-dark/10 rounded-[2rem] md:rounded-5xl shadow-xl flex flex-col md:flex-row overflow-hidden will-change-transform z-[1] transform-origin-top"
-                            // Initially stack them using z-index
-                            style={{ zIndex: index }}
-                        >
+                <h2 className="proto-head font-display font-medium text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.05] tracking-tightest mb-16 max-w-3xl text-balance">
+                    Tre fasi, un <span className="text-mint">sistema che resta tuo.</span>
+                </h2>
 
-                            {/* Animation Side (Visuals) */}
-                            <div className="w-full md:w-1/2 h-2/5 md:h-full bg-[#f8f7f4] border-b md:border-b-0 md:border-r border-dark/5 p-6 md:p-8 relative flex items-center justify-center shrink-0">
-                                <protocol.Animation />
-                                <div className="absolute bottom-4 left-6 md:bottom-6 font-mono text-xs text-dark/30">FIG. {protocol.step}</div>
+                <ol className="proto-list relative">
+                    {/* Vertical connector + animated progress overlay */}
+                    <div className="absolute left-5 md:left-7 top-0 bottom-0 w-px bg-line" />
+                    <div className="proto-progress absolute left-5 md:left-7 top-0 bottom-0 w-px bg-mint shadow-[0_0_10px_rgb(var(--mint))]" />
+
+                    {protocols.map((p) => (
+                        <li key={p.n} className="proto-step relative pl-14 md:pl-20 pb-10 md:pb-14 last:pb-0">
+                            <div className="absolute left-0 top-0 w-10 md:w-14 h-10 md:h-14 rounded-md bg-elev border border-line2 flex items-center justify-center font-mono text-mint text-sm md:text-base">
+                                {p.n}
                             </div>
 
-                            {/* Content Side */}
-                            <div className="w-full md:w-1/2 h-3/5 md:h-full p-6 md:p-16 flex flex-col justify-center overflow-y-auto">
-                                <div className="font-mono text-4xl md:text-7xl text-dark/10 font-bold mb-2 md:mb-4 shrink-0">
-                                    {protocol.step}
+                            <div className="grid lg:grid-cols-12 gap-8 panel p-6 md:p-8 hover:border-mint/30 transition-colors" data-cursor>
+                                <div className="lg:col-span-7">
+                                    <h3 className="font-display font-medium text-2xl md:text-3xl text-fg mb-3 tracking-tight">
+                                        {p.t}
+                                    </h3>
+                                    <p className="text-mute leading-relaxed">{p.d}</p>
                                 </div>
-                                <h3 className="font-heading font-bold text-2xl sm:text-3xl md:text-4xl text-primary mb-3 md:mb-6 shrink-0 leading-tight">
-                                    {protocol.title}
-                                </h3>
-                                <p className="font-sans text-dark/70 text-sm sm:text-base md:text-lg leading-relaxed md:leading-relaxed">
-                                    {protocol.desc}
-                                </p>
+                                <div className="lg:col-span-5">
+                                    <div className="font-mono text-[11px] uppercase tracking-widest text-dim mb-3">$ ls deliverables/</div>
+                                    <ul className="space-y-2">
+                                        {p.out.map(f => (
+                                            <li key={f} className="font-mono text-sm text-mute flex items-center gap-2">
+                                                <span className="text-mint">→</span>
+                                                <span className="text-fg/80">{f}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ol>
             </div>
         </section>
     );

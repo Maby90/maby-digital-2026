@@ -1,74 +1,45 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React from 'react';
 
 const Philosophy = () => {
-    const container = useRef(null);
-    const textRef = useRef(null);
-
-    useLayoutEffect(() => {
-        // A simple fade-up animation for the text lines when scrolling into view
-        const ctx = gsap.context(() => {
-            gsap.from('.reveal-line', {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top 60%",
-                    end: "bottom 80%",
-                    scrub: 1, // Tie animation to scroll
-                },
-                y: 40,
-                opacity: 0,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
-
-            // Parallax effect for the background image
-            gsap.to('.parallax-bg', {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true,
-                },
-                yPercent: 20,
-                ease: "none"
-            });
-
-        }, container);
-
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <section
-            ref={container}
-            className="relative w-full min-h-[80vh] flex items-center bg-dark overflow-hidden py-32 px-6 md:px-12 lg:px-24"
-        >
-            {/* Background Image with Parallax */}
-            <div className="absolute inset-x-0 -top-[20%] h-[140%] z-0 parallax-bg opacity-20">
-                <img
-                    src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
-                    alt="Abstract dark organic lines"
-                    className="w-full h-full object-cover"
-                />
-                {/* Adds a gradient to blend smoothly with adjacent sections if needed */}
-                <div className="absolute inset-0 bg-dark/40"></div>
-            </div>
+        <section className="relative bg-bg py-32 md:py-48 border-t border-line overflow-hidden">
+            {/* Subtle grid */}
+            <div className="absolute inset-0 grid-bg opacity-30" />
+            <div className="absolute inset-0 bg-mint-glow" />
+            {/* Scan line accent */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-[1px] bg-gradient-to-b from-transparent via-mint/20 to-transparent" />
 
-            <div className="relative z-10 max-w-5xl mx-auto w-full" ref={textRef}>
-                <div className="flex flex-col gap-12 md:gap-16">
-                    <p className="reveal-line font-sans text-xl md:text-2xl text-background/60 leading-relaxed max-w-2xl">
-                        La maggior parte delle agenzie si concentra su: <br />
-                        <span className="text-background/90 tracking-wide">tattiche a breve termine e automazioni senza anima.</span>
+            <div className="relative container-edge">
+                <div className="max-w-5xl">
+                    <div className="flex items-center gap-3 mb-10">
+                        <span className="eyebrow text-mint">// 03 · Tesi</span>
+                        <span className="h-px flex-1 bg-line" />
+                    </div>
+
+                    <p className="text-mute text-base md:text-lg leading-relaxed max-w-2xl mb-10 font-mono" data-reveal>
+                        Molti vendono l'AI come moda:<br/>
+                        <span className="text-fg">chatbot che fingono di essere persone, demo che non reggono la produzione.</span>
                     </p>
 
-                    <h2 className="reveal-line font-heading font-medium text-4xl md:text-5xl lg:text-7xl text-background leading-[1.1] max-w-4xl tracking-tight">
-                        Io mi concentro su: <br className="hidden md:block" />
-                        <span className="font-drama italic font-light text-accent text-6xl md:text-7xl lg:text-8xl">Crescita</span> <br className="hidden md:block" />
-                        guidata dall'identità.
+                    <h2 className="font-display font-medium text-4xl md:text-6xl lg:text-7xl xl:text-[88px] leading-[1.02] tracking-tightest text-fg text-balance" data-reveal>
+                        Io costruisco AI<br/>
+                        che lavora nel <span className="text-mint">backend.</span>
                     </h2>
+
+                    {/* Principles */}
+                    <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl" data-reveal-group>
+                        {[
+                            ['P.01', 'Competenza prima dello strumento', 'L\'AI la amplifica, non la sostituisce.'],
+                            ['P.02', 'AI nel backend', 'Non in vetrina. Lavora, non recita.'],
+                            ['P.03', 'Sistemi che restano tuoi', 'Con documentazione e controllo.'],
+                        ].map(([k, t, sub]) => (
+                            <div key={k} className="panel p-5" data-reveal-item>
+                                <div className="font-mono text-[11px] text-mint mb-3">{k}</div>
+                                <div className="text-fg font-medium text-base mb-1">{t}</div>
+                                <div className="text-mute text-sm">{sub}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

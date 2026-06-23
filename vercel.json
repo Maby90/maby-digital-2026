@@ -1,8 +1,11 @@
 {
+    "cleanUrls": true,
     "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/index.html"
-        }
+        { "source": "/newsletter", "destination": "/newsletter/index.html" },
+        { "source": "/privacy", "destination": "/privacy/index.html" },
+        { "source": "/grazie", "destination": "/grazie/index.html" },
+        { "source": "/skill-carosello", "destination": "/skill-carosello/index.html" },
+        { "source": "/workflow-call", "destination": "/workflow-call/index.html" },
+        { "source": "/((?!api/).*)", "destination": "/index.html" }
     ]
 }

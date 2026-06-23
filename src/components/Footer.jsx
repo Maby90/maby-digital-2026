@@ -3,41 +3,50 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="w-full bg-dark text-background pt-24 pb-12 px-6 md:px-12 lg:px-24 rounded-t-[4rem] -mt-16 relative z-30">
-            <div className="max-w-7xl mx-auto flex flex-col gap-16">
-
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 border-b border-background/10 pb-16">
-                    <div className="flex flex-col gap-6 max-w-sm">
-                        <h3 className="font-heading font-bold text-3xl tracking-tight">Maby Prochilo</h3>
-                        <p className="font-sans text-background/50 text-sm leading-relaxed">
+        <footer className="bg-surface/40 border-t border-line text-fg">
+            <div className="container-edge pt-20 pb-10">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-6 pb-16 border-b border-line">
+                    <div className="md:col-span-6">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="w-7 h-7 rounded-md bg-mint/15 border border-mint/30 flex items-center justify-center font-mono text-[13px] font-bold text-mint">m</span>
+                            <span className="font-medium tracking-tight">Maby Prochilo</span>
+                        </div>
+                        <p className="text-mute text-sm leading-relaxed max-w-md">
                             Digital Strategist specializzata in acquisizione clienti, personal branding e automazioni AI per aziende ambiziose.
                         </p>
-                    </div>
-
-                    <div className="flex flex-col items-start md:items-end gap-2">
-                        <a href="mailto:hello@mprochilo.it" className="font-heading text-xl md:text-2xl hover:text-accent transition-colors interactive-link">
-                            hello@mprochilo.it
+                        <a href="mailto:hello@mprochilo.it" className="mt-6 inline-flex items-center gap-2 font-mono text-mint hover:text-mint/80 transition-colors">
+                            $ <span className="text-fg">contact</span> hello@mprochilo.it
                         </a>
-                        <div className="flex items-center gap-3 mt-4 px-4 py-2 rounded-full border border-background/10 bg-background/5">
-                            <div className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#81C784] opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#81C784]"></span>
-                            </div>
-                            <span className="font-mono text-xs uppercase tracking-widest text-[#81C784]">System Operational</span>
+                        <div className="mt-6 pill inline-flex">
+                            <span className="pill-dot" />
+                            System Operational
                         </div>
                     </div>
-                </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-xs text-background/40">
-                    <p>© {new Date().getFullYear()} Maby Prochilo. Tutti i diritti riservati.</p>
-                    <div className="flex flex-wrap justify-center items-center gap-6">
-                        <Link to="/insights" className="hover:text-background transition-colors interactive-link">Insights</Link>
-                        <Link to="/sentiero" className="hover:text-background transition-colors interactive-link">Sentiero</Link>
-                        <Link to="/privacy" className="hover:text-background transition-colors interactive-link">Privacy Policy</Link>
-                        <a href="https://www.linkedin.com/in/maby-prochilo/" className="hover:text-background transition-colors interactive-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <div className="md:col-span-3 md:col-start-8">
+                        <p className="eyebrow mb-4">Naviga</p>
+                        <ul className="space-y-2.5 text-sm text-mute">
+                            <li><a href="/#chi-sono" className="hover:text-fg transition-colors">Chi sono</a></li>
+                            <li><a href="/#servizi" className="hover:text-fg transition-colors">Servizi</a></li>
+                            <li><a href="/#metodo" className="hover:text-fg transition-colors">Metodo</a></li>
+                            <li><Link to="/newsletter" className="hover:text-fg transition-colors">Newsletter</Link></li>
+                        </ul>
+                    </div>
+
+                    <div className="md:col-span-3">
+                        <p className="eyebrow mb-4">Altrove</p>
+                        <ul className="space-y-2.5 text-sm text-mute">
+                            <li><a href="https://www.linkedin.com/in/maby-prochilo/" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">LinkedIn ↗</a></li>
+                            <li><a href="https://oltreilprompt.substack.com/" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">Substack ↗</a></li>
+                            <li><Link to="/privacy" className="hover:text-fg transition-colors">Privacy Policy</Link></li>
+                        </ul>
                     </div>
                 </div>
 
+                <div className="flex flex-col md:flex-row justify-between gap-3 pt-6 font-mono text-[11px] tracking-wider text-dim">
+                    <span>© {new Date().getFullYear()} Maby Prochilo · P.IVA 03068590805</span>
+                    <span>Built in IT · Deployed on Vercel</span>
+                </div>
             </div>
         </footer>
     );

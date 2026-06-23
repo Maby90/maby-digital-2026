@@ -5,14 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-meta.js",
+    "build:full": "node scripts/generate-og.js && vite build && node scripts/prerender-meta.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/geist": "^5.2.8",
+    "@fontsource/geist-mono": "^5.2.7",
     "@gsap/react": "^2.1.2",
     "@notionhq/client": "^2.2.14",
     "@tailwindcss/typography": "^0.5.19",
+    "fdir": "^6.5.0",
     "gsap": "^3.14.2",
     "lucide-react": "^0.575.0",
     "notion-to-md": "^3.1.9",
@@ -20,7 +24,8 @@
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.1",
-    "rehype-raw": "^7.0.0"
+    "rehype-raw": "^7.0.0",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

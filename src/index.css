@@ -1,55 +1,142 @@
+@import "@fontsource/geist/300.css";
+@import "@fontsource/geist/400.css";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root, .dark {
+    --bg:           10 10 11;       /* near-black */
+    --surface:      17 17 20;
+    --elev:         24 24 28;
+    --line:         35 35 40;
+    --line-strong:  46 46 53;
+    --fg:           237 237 237;
+    --mute:         139 139 146;
+    --dim:          92 92 99;
+    --mint:         110 231 183;
+  }
+  .light {
+    --bg:           250 250 249;
+    --surface:      243 243 241;
+    --elev:         234 234 231;
+    --line:         220 220 215;
+    --line-strong:  200 200 195;
+    --fg:           14 14 14;
+    --mute:         91 91 95;
+    --dim:          140 140 145;
+    --mint:         5 150 105;       /* darker emerald for AA contrast on light */
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color-scheme: dark;
+  }
+  html.light { color-scheme: light; }
   body {
-    @apply bg-background text-dark font-sans overflow-x-hidden;
+    @apply bg-bg text-fg font-sans overflow-x-hidden;
+    font-feature-settings: "ss01", "cv11", "tnum";
+  }
+  ::selection { background: rgb(var(--mint) / 0.35); color: rgb(var(--fg)); }
+  a { color: inherit; text-decoration: none; }
+  h1,h2,h3,h4 { @apply font-display tracking-tightest; }
+}
+
+@layer components {
+  .container-edge { @apply w-full px-5 md:px-8 lg:px-12 mx-auto max-w-7xl; }
+
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-mute;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-line bg-surface/60 backdrop-blur font-mono text-[11px] tracking-wider text-mute;
+  }
+  .pill-dot { @apply w-1.5 h-1.5 rounded-full bg-mint shadow-[0_0_8px_rgb(var(--mint))]; }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-mint text-bg px-5 py-3 rounded-md text-sm font-medium tracking-tight hover:bg-mint/90 transition-colors;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 border border-line bg-surface/40 hover:bg-elev text-fg px-5 py-3 rounded-md text-sm font-medium tracking-tight transition-colors;
+  }
+  .btn-mono {
+    @apply inline-flex items-center gap-2 border border-line bg-surface/40 hover:bg-elev text-fg px-3 py-2 rounded-md font-mono text-xs uppercase tracking-widest transition-colors;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgb(var(--line) / 0.7) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--line) / 0.7) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, black 30%, transparent 80%);
+  }
+
+  .panel {
+    @apply bg-surface border border-line rounded-xl;
+  }
+
+  .panel-elev {
+    @apply bg-elev border border-line2 rounded-xl;
+  }
+
+  .link-mono {
+    @apply font-mono text-[11px] uppercase tracking-widest text-mute hover:text-fg transition-colors inline-flex items-center gap-1.5;
+  }
+
+  /* Terminal blinking cursor */
+  .blink::after {
+    content: '▍';
+    @apply inline-block ml-0.5 text-mint;
+    animation: cursor 1s ease-in-out infinite;
   }
 }
 
 @layer utilities {
-  .noise-overlay {
-    filter: url(#noiseFilter);
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
 
-  /* Magnetic button hover effect setup */
-  .btn-magnetic {
-    @apply relative overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
-  }
-  
-  .btn-magnetic::before {
+  /* SplitText: mask words so chars rise from behind a clean edge */
+  .hero-word { overflow: hidden; padding-bottom: 0.08em; }
+  .hero-char { display: inline-block; will-change: transform, filter; }
+
+  /* Custom cursor: hide the native cursor on fine-pointer devices when active */
+  html.has-custom-cursor,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [data-cursor],
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea { cursor: none; }
+
+  /* Animated sweep border for emphasis on hover */
+  .sweep-border { position: relative; }
+  .sweep-border::after {
     content: '';
-    @apply absolute inset-0 bg-dark w-full h-full translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-0;
+    position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(110deg, transparent 30%, rgb(var(--mint) / 0.7), transparent 70%);
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .3s; animation: shimmer 3s linear infinite;
   }
-  
-  .btn-magnetic:hover::before {
-    @apply translate-y-0;
-  }
-  
-  .btn-magnetic:hover {
-    transform: scale(1.03);
-  }
-  
-  .btn-magnetic:active {
-    transform: scale(0.98);
+  .sweep-border:hover::after { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
   }
 
-  .interactive-link {
-    @apply inline-block transition-transform duration-300 hover:-translate-y-[1px];
-  }
-}
-
-/* Hide scrollbar for cleaner look if requested, usually useful for these cinematic designs */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-dark/20 rounded-full;
-}
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-dark/40;
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-line2 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-mute; }
 }
