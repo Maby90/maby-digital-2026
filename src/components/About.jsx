@@ -41,7 +41,7 @@ const About = () => {
 
                         <div className="mt-10 space-y-6 text-mute text-base md:text-lg leading-relaxed max-w-prose">
                             <p data-reveal>
-                                <strong className="text-fg font-medium">Maby Prochilo progetta e installa sistemi AI per aziende</strong>: agenti, automazioni e skill su Claude Code per freelance, PMI e team B2B. L'AI sta nel backend e lavora dentro i processi reali, non è un chatbot da vetrina. La competenza viene prima dello strumento: l'AI la amplifica, non la sostituisce.
+                                <strong className="text-fg font-medium">Progetto e installo sistemi AI per le aziende</strong>: agenti, automazioni e skill su Claude Code per freelance, PMI e team B2B. Tengo l'AI nel backend, dentro i processi reali, non come chatbot da vetrina. La competenza viene prima dello strumento: l'AI la amplifica, non la sostituisce.
                             </p>
                             <p data-reveal>
                                 Per anni ho disegnato case e studiato architettura, ma i confini fisici dei muri mi stavano stretti. Ho portato quella passione per la progettazione nel digitale, con più libertà e dinamismo. Invece di edifici, oggi progetto sistemi: pezzi che si parlano, reggono il carico e si possono cambiare senza rompere tutto.
