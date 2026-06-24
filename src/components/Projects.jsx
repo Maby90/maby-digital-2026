@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import { ArrowUpRight } from 'lucide-react';
-import { gsap, ScrollTrigger, motionOK, isTouch } from '../lib/gsap';
+import { gsap, motionOK, isTouch } from '../lib/gsap';
 
 const projects = [
   {
@@ -25,7 +25,7 @@ const projects = [
     kind: 'App iOS',
     desc: 'Trasforma articoli e PDF in episodi podcast a due voci. Progettata e pubblicata da sola sull\'App Store.',
     tags: ['Swift', 'TTS', 'App Store'],
-    href: 'https://apps.apple.com/it/app/learncast/id6739044841',
+    href: 'https://apps.apple.com/it/search?term=learncast',
     external: true,
   },
   {
@@ -38,126 +38,79 @@ const projects = [
   },
 ];
 
-function tiltHandlers(el) {
-  const move = (e) => {
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    gsap.to(el, { rotateY: px * 10, rotateX: -py * 10, duration: 0.4, ease: 'power3.out', transformPerspective: 800 });
-  };
-  const reset = () => gsap.to(el, { rotateY: 0, rotateX: 0, duration: 0.6, ease: 'power3.out' });
-  el.addEventListener('pointermove', move);
-  el.addEventListener('pointerleave', reset);
-  return () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', reset); };
-}
-
 const Card = ({ p }) => {
   const ref = useRef(null);
+
   useGSAP(() => {
     if (!motionOK() || isTouch()) return;
-    return tiltHandlers(ref.current);
+    const el = ref.current;
+    const inner = el.querySelector('.card-inner');
+    const move = (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      gsap.to(inner, { rotateY: px * 8, rotateX: -py * 8, duration: 0.4, ease: 'power3.out', transformPerspective: 900 });
+    };
+    const reset = () => gsap.to(inner, { rotateY: 0, rotateX: 0, duration: 0.6, ease: 'power3.out' });
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerleave', reset);
+    return () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', reset); };
   }, { scope: ref });
 
-  const Wrap = p.external ? 'a' : 'a';
   return (
-    <Wrap
+    <a
       ref={ref}
       href={p.href}
       {...(p.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      data-cursor
-      className="project-card group relative flex w-[85vw] sm:w-[440px] shrink-0 flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-7 md:p-8 transition-colors hover:border-mint/40"
-      style={{ transformStyle: 'preserve-3d', minHeight: '340px' }}
+      data-reveal-item
+      className="group block cursor-pointer rounded-2xl"
+      style={{ perspective: '900px' }}
     >
-      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-mint/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div>
-        <div className="mb-6 flex items-center justify-between">
-          <span className="font-mono text-[11px] uppercase tracking-widest text-mint">{p.kind}</span>
-          <ArrowUpRight size={18} className="text-mute transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-mint" />
+      <div
+        className="card-inner relative flex h-full min-h-[300px] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-7 md:p-8 transition-colors duration-300 group-hover:border-mint/50"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-mint/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div>
+          <div className="mb-6 flex items-center justify-between">
+            <span className="font-mono text-[11px] uppercase tracking-widest text-mint">{p.kind}</span>
+            <ArrowUpRight size={20} className="text-mute transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-mint" />
+          </div>
+          <h3 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-fg group-hover:text-mint transition-colors">{p.name}</h3>
+          <p className="mt-4 text-mute leading-relaxed">{p.desc}</p>
         </div>
-        <h3 className="font-display text-2xl md:text-3xl font-medium tracking-tight text-fg">{p.name}</h3>
-        <p className="mt-4 text-mute leading-relaxed">{p.desc}</p>
+        <div className="mt-7 flex flex-wrap gap-2 border-t border-line pt-5">
+          {p.tags.map((t) => (
+            <span key={t} className="rounded border border-line bg-bg/40 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-mute">
+              {t}
+            </span>
+          ))}
+        </div>
       </div>
-      <div className="mt-7 flex flex-wrap gap-2 border-t border-line pt-5">
-        {p.tags.map((t) => (
-          <span key={t} className="rounded border border-line bg-bg/40 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-mute">
-            {t}
-          </span>
-        ))}
-      </div>
-    </Wrap>
+    </a>
   );
 };
 
 export default function Projects() {
-  const section = useRef(null);
-  const track = useRef(null);
-
-  useGSAP(() => {
-    if (!motionOK() || isTouch()) return;
-    const trackEl = track.current;
-    const cards = gsap.utils.toArray('.project-card', trackEl);
-    if (cards.length < 2) return;
-
-    const getScroll = () => trackEl.scrollWidth - trackEl.clientWidth;
-    if (getScroll() <= 0) return;
-
-    const focus = () => {
-      const cx = window.innerWidth / 2;
-      cards.forEach((c) => {
-        const r = c.getBoundingClientRect();
-        const d = Math.abs((r.left + r.width / 2) - cx) / window.innerWidth;
-        gsap.set(c, { scale: gsap.utils.clamp(0.9, 1, 1 - d * 0.25), opacity: gsap.utils.clamp(0.45, 1, 1 - d * 0.9) });
-      });
-    };
-
-    gsap.to(trackEl, {
-      x: () => -getScroll(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section.current,
-        start: 'top top',
-        end: () => `+=${getScroll()}`,
-        scrub: 0.8,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: focus,
-        onRefresh: focus,
-      },
-    });
-    focus();
-  }, { scope: section });
-
   return (
-    <section id="progetti" ref={section} className="relative border-t border-line bg-bg py-24 md:py-0 md:h-screen md:flex md:flex-col md:justify-center overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-20" />
+    <section id="progetti" className="relative border-t border-line bg-bg py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
       <div className="container-edge relative">
-        <div className="mb-10 flex items-end justify-between gap-4">
-          <div>
-            <span className="eyebrow text-mint">Side project</span>
-            <h2 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tightest text-fg text-balance" data-split>
-              Quello che porto <span className="text-mint">avanti io.</span>
-            </h2>
-            <p className="mt-4 max-w-md text-mute text-sm md:text-base leading-relaxed">
-              Prodotti e business che ho costruito e mando avanti in parallelo.
-            </p>
-          </div>
-          <span className="hidden md:block font-mono text-[11px] text-dim">scorri →</span>
+        <div className="mb-12 md:mb-16">
+          <span className="eyebrow text-mint">Side project</span>
+          <h2 className="mt-3 font-display text-3xl md:text-5xl lg:text-6xl font-medium tracking-tightest text-fg text-balance" data-split>
+            Quello che porto <span className="text-mint">avanti io.</span>
+          </h2>
+          <p className="mt-4 max-w-md text-mute text-sm md:text-base leading-relaxed" data-reveal>
+            Prodotti e business che ho costruito e mando avanti in parallelo. Clicca per aprirli.
+          </p>
         </div>
-      </div>
 
-      <div
-        ref={track}
-        className="relative flex gap-5 px-5 md:px-8 lg:px-12 overflow-x-auto md:overflow-visible snap-x md:snap-none pb-4 md:pb-0 [scrollbar-width:none] [-ms-overflow-style:none]"
-        style={{ willChange: 'transform' }}
-      >
-        {projects.map((p) => (
-          <div key={p.name} className="snap-start" style={{ transformStyle: 'preserve-3d' }}>
-            <Card p={p} />
-          </div>
-        ))}
-        {/* trailing spacer so last card can reach center on pinned scroll */}
-        <div className="hidden md:block shrink-0 w-[20vw]" aria-hidden="true" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5" data-reveal-group data-reveal="scale">
+          {projects.map((p) => (
+            <Card key={p.name} p={p} />
+          ))}
+        </div>
       </div>
     </section>
   );
