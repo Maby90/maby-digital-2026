@@ -12,7 +12,6 @@ import Action from './components/Action';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import IntroLoader from './components/IntroLoader';
-import CustomCursor from './components/CustomCursor';
 import ScrollFX from './components/ScrollFX';
 import SmoothScroll from './components/SmoothScroll';
 import ScrollProgress from './components/ScrollProgress';
@@ -61,7 +60,6 @@ function App() {
     <BrowserRouter>
       <SmoothScroll />
       <IntroLoader />
-      <CustomCursor />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
