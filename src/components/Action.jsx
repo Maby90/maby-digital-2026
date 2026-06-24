@@ -38,7 +38,7 @@ const Action = () => {
                     </div>
 
                     <div className="mt-10 font-mono text-[11px] uppercase tracking-widest text-dim">
-                        Risposta entro 48h · 2 spot disponibili Q3 2026
+                        Risposta entro 48h · 1 spot disponibile Q2 2026
                     </div>
                 </div>
             </div>

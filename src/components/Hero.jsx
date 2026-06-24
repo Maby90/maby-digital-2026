@@ -71,10 +71,10 @@ const Hero = () => {
                 <div className="hero-pill flex items-center gap-3 mb-10">
                     <span className="pill" data-cursor>
                         <span className="pill-dot" />
-                        Disponibile · 2 progetti Q3 2026
+                        Disponibile · 1 progetto Q2 2026
                     </span>
                     <span className="hidden sm:inline-flex pill">
-                        <span className="text-mint">v2026.6</span>
+                        <span className="text-mint">v3.0</span>
                         <span className="text-mute">/ sistemi ai</span>
                     </span>
                 </div>

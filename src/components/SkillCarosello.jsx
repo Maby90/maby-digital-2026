@@ -47,7 +47,7 @@ const SkillCarosello = () => {
                             <div className="flex flex-wrap items-center gap-3 mb-8">
                                 <span className="pill"><span className="pill-dot" />Lead magnet · gratis</span>
                                 <span className="hidden md:inline-flex pill">
-                                    <span className="text-mint">v2026.4</span> · skill Claude
+                                    <span className="text-mint">v3.0</span> · skill Claude
                                 </span>
                             </div>
 

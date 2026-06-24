@@ -128,7 +128,7 @@ const PromptBox = () => {
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-line bg-elev/40">
                 <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-mute">
                     <span className="w-2 h-2 rounded-full bg-mint shadow-[0_0_6px_rgb(var(--mint))]" />
-                    maby.assistant · v2026.4
+                    maby.assistant · v3.0
                 </div>
                 <div className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-mute/40" />
