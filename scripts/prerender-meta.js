@@ -39,6 +39,11 @@ const routes = [
         ogImage: '/og-skill-carosello.png',
     },
     {
+        path: '/skill-lavagne',
+        title: 'Skill Claude per lavagne Excalidraw | Maby Prochilo',
+        description: 'Scarica la skill che uso per generare schemi e lavagne Excalidraw con Claude: flussi, timeline, confronti, mappe. Gratis, senza abbonamenti.',
+    },
+    {
         path: '/workflow-call',
         title: 'Workflow: da una call ai 4 contenuti | Maby Prochilo',
         description: 'Da una call di 30 minuti a 4 contenuti diversi (post LinkedIn, newsletter, reel, carosello). Workflow + 4 prompt Claude. Iscriviti per scaricare il PDF.',
