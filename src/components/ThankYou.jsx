@@ -20,6 +20,21 @@ const variants = {
         cta: { href: 'https://oltreilprompt.substack.com/', label: 'Apri Substack', external: true },
         leadEvent: { content_name: 'skill-carosello', content_category: 'lead-magnet' },
     },
+    'skill-lavagne': {
+        title: 'Iscrizione confermata · Skill lavagne in arrivo',
+        description: 'Grazie per esserti iscritta/o. Scarica subito la skill Claude per le lavagne Excalidraw.',
+        eyebrow: '200 OK · iscrizione confermata',
+        h1: 'Skill <em class="not-italic text-mint">sbloccata</em>.',
+        body: 'La skill per le lavagne Excalidraw è pronta: scaricala qui sotto. Dentro trovi la skill Claude, il generatore Python e la guida di setup. Riceverai anche le prossime guide via email.',
+        statusLines: [
+            ['$ get --skill lavagne-excalidraw', 'mint'],
+            ['→ status: ready to download', 'mute'],
+            ['→ format: .zip · skill + script + guida', 'mute'],
+        ],
+        download: { href: '/downloads/lavagne-claude.zip', label: 'Scarica la skill' },
+        cta: { href: 'https://oltreilprompt.substack.com/', label: 'Vai alla newsletter', external: true },
+        leadEvent: { content_name: 'skill-lavagne', content_category: 'lead-magnet' },
+    },
     'workflow-call': {
         title: 'Iscrizione confermata · Workflow Call PDF',
         description: 'Grazie per esserti iscritta/o. Scarica il workflow PDF qui sotto.',
