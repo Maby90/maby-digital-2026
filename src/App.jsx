@@ -22,6 +22,7 @@ import NotFound from './components/NotFound';
 import OltreIlPrompt from './components/OltreIlPrompt';
 import NewsletterPreview from './components/NewsletterPreview';
 import SkillCarosello from './components/SkillCarosello';
+import SkillLavagne from './components/SkillLavagne';
 import WorkflowCall from './components/WorkflowCall';
 import Faq from './components/Faq';
 import MiniAppClaudeCode from './components/MiniAppClaudeCode';
@@ -66,6 +67,7 @@ function App() {
         <Route path="/grazie" element={<ThankYou />} />
         <Route path="/newsletter" element={<OltreIlPrompt />} />
         <Route path="/skill-carosello" element={<SkillCarosello />} />
+        <Route path="/skill-lavagne" element={<SkillLavagne />} />
         <Route path="/workflow-call" element={<WorkflowCall />} />
         <Route path="/miniapp-claudecode" element={<MiniAppClaudeCode />} />
         <Route path="*" element={<NotFound />} />
