@@ -17,6 +17,7 @@ import SmoothScroll from './components/SmoothScroll';
 import ScrollProgress from './components/ScrollProgress';
 import Marquee from './components/Marquee';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import PrivacySfoglia from './components/PrivacySfoglia';
 import ThankYou from './components/ThankYou';
 import NotFound from './components/NotFound';
 import OltreIlPrompt from './components/OltreIlPrompt';
@@ -26,6 +27,8 @@ import SkillLavagne from './components/SkillLavagne';
 import WorkflowCall from './components/WorkflowCall';
 import Faq from './components/Faq';
 import MiniAppClaudeCode from './components/MiniAppClaudeCode';
+import AiNelTuoLavoro from './components/AiNelTuoLavoro';
+import Percorso from './components/Percorso';
 import useSeo from './hooks/useSeo';
 
 function Home() {
@@ -64,12 +67,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-sfoglia" element={<PrivacySfoglia />} />
         <Route path="/grazie" element={<ThankYou />} />
         <Route path="/newsletter" element={<OltreIlPrompt />} />
         <Route path="/skill-carosello" element={<SkillCarosello />} />
         <Route path="/skill-lavagne" element={<SkillLavagne />} />
         <Route path="/workflow-call" element={<WorkflowCall />} />
         <Route path="/miniapp-claudecode" element={<MiniAppClaudeCode />} />
+        <Route path="/ai-nel-tuo-lavoro" element={<AiNelTuoLavoro />} />
+        <Route path="/percorso" element={<Percorso />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ContactModal />
