@@ -28,6 +28,11 @@ const routes = [
         description: 'Politica di Riservatezza ai sensi dell\'art. 13 D.lgs. n.196/2003 e Regolamento U.E 679/2016 (GDPR).',
     },
     {
+        path: '/privacy-sfoglia',
+        title: 'Privacy Policy · Sfoglia Reader',
+        description: 'Informativa privacy dell\'app Sfoglia Reader: nessun dato raccolto, tutto resta sul tuo dispositivo.',
+    },
+    {
         path: '/grazie',
         title: 'Richiesta ricevuta · Maby Prochilo',
         description: 'Grazie per la tua richiesta. Ti rispondo entro 48 ore lavorative.',
@@ -48,6 +53,17 @@ const routes = [
         title: 'Workflow: da una call ai 4 contenuti | Maby Prochilo',
         description: 'Da una call di 30 minuti a 4 contenuti diversi (post LinkedIn, newsletter, reel, carosello). Workflow + 4 prompt Claude. Iscriviti per scaricare il PDF.',
         robots: 'noindex, follow',
+    },
+    {
+        path: '/ai-nel-tuo-lavoro',
+        title: 'AI nel tuo lavoro · Affiancamento 1:1 · Maby Prochilo',
+        description: 'Tre mesi uno a uno per mettere l\'AI dentro il tuo lavoro con Claude Code. Lascia all\'AI il lavoro ripetitivo, concentrati su quello che conta. Coorte 1.0, tre posti, si entra per candidatura.',
+    },
+    {
+        path: '/percorso',
+        title: 'Il tuo percorso · AI nel tuo lavoro',
+        description: 'Area riservata del percorso AI nel tuo lavoro.',
+        robots: 'noindex, nofollow',
     },
 ];
 
