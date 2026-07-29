@@ -58,7 +58,7 @@ const FASI = [
         icon: Wrench,
         tag: 'Mese 1',
         title: 'Si costruisce',
-        body: 'Call ravvicinate, quasi settimanali. Installiamo tutto, colleghiamo i tuoi strumenti, montiamo le prime automazioni sui processi che ti mangiano più tempo. A schermo condiviso: guidi tu, io correggo. Impari facendo.',
+        body: 'Call ravvicinate, quasi settimanali. Installiamo tutto, colleghiamo i tuoi strumenti, montiamo le prime automazioni sui processi che ti mangiano più tempo. La parte tecnica la faccio io, a schermo condiviso, spiegandoti cosa sto facendo e perché.',
     },
     {
         icon: Repeat,
@@ -76,7 +76,7 @@ const FASI = [
 
 const PERCORSO = [
     { icon: Users, t: 'Tre mesi uno a uno', d: 'Io e te, mai in gruppo. Tre mesi in cui non ti mollo finché l’AI non è dentro il tuo lavoro davvero.' },
-    { icon: CalendarClock, t: 'Sei call 1:1', d: 'A schermo condiviso: guidi tu, io correggo. Ravvicinate all’inizio per costruire, poi strategiche per consolidare.' },
+    { icon: CalendarClock, t: 'Sei call 1:1', d: 'A schermo condiviso: costruisco io, tu vedi nascere il tuo sistema pezzo per pezzo e impari a usarlo. Ravvicinate all’inizio per costruire, poi strategiche per consolidare.' },
     { icon: Cpu, t: 'Il tuo sistema su Claude Code', d: 'Skill e automazioni costruite sul tuo mestiere (contenuti, follow-up, monitoraggio, routine, siti), con i tuoi strumenti collegati: Notion, Drive, posta, calendario, immagini.' },
     { icon: Headset, t: 'Supporto email e Telegram', d: 'Ti blocchi tra una call e l’altra? Mi scrivi su email o Telegram e ti sblocco in giornata, senza aspettare la volta dopo.' },
 ];
@@ -319,7 +319,7 @@ const AiNelTuoLavoro = () => {
                                 In tre mesi l’AI entra nel tuo lavoro di ogni giorno. La costruiamo insieme, con Claude Code e gli strumenti giusti per il tuo mestiere: un sistema su misura, che diventa tuo. Un percorso uno a uno, tre persone selezionate a coorte.
                             </p>
                             <p className="antl-sub mt-4 text-fg/80 text-base leading-relaxed max-w-2xl">
-                                Questa è la <span className="text-mint">prima edizione</span>: sei tra i primi tre a entrare, al prezzo di lancio. Dalla prossima coorte cambia tutto, prezzo compreso.
+                                Questa è la <span className="text-mint">prima coorte in assoluto</span>: tre posti, al prezzo di lancio di <span className="text-fg font-medium">€4.500</span>. Si entra per candidatura, e quando i tre posti sono presi chiudo. Quando riaprirò per la seconda, sinceramente, non lo so ancora.
                             </p>
                             <div className="antl-cta mt-10 flex flex-wrap items-center gap-3">
                                 <button onClick={scrollToForm} className="btn-primary">
@@ -535,7 +535,7 @@ const AiNelTuoLavoro = () => {
                         <div className="panel p-8">
                             <div className="font-mono text-xs uppercase tracking-widest text-dim mb-4">lascia perdere se</div>
                             <p className="text-mute text-lg leading-relaxed">
-                                Cerchi la scorciatoia facile, il “diventa ricco con l’AI”, o vuoi qualcuno che faccia il lavoro al posto tuo mentre tu guardi. Qui si impara facendo, e ci perderemmo il tempo entrambi.
+                                Cerchi la scorciatoia facile, il “diventa ricco con l’AI”, oppure vuoi un sistema da mettere in un cassetto e non toccare più. Il sistema lo costruisco io, ma poi tocca a te usarlo ogni giorno: se non hai voglia di cambiare il tuo modo di lavorare, ci perderemmo il tempo entrambi.
                             </p>
                         </div>
                     </div>
@@ -543,6 +543,83 @@ const AiNelTuoLavoro = () => {
                         <ShieldCheck size={18} className="text-mint mt-0.5 shrink-0" />
                         <p className="text-mute text-sm leading-relaxed">
                             <span className="text-fg">L’unico strumento che ti serve avere è un abbonamento a Claude (Pro o Max).</span> Lo attiviamo insieme all’inizio, con calma.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* ---------- PREZZO E ACCESSO ---------- */}
+            <section className="py-20 md:py-28 border-b border-line">
+                <div className="container-edge">
+                    <div className="reveal mb-12 max-w-3xl">
+                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// il prezzo e come si entra</div>
+                        <h2 className="font-display font-medium text-3xl md:text-5xl tracking-tight leading-tight mb-5">
+                            Quanto costa, e perché non basta pagare.
+                        </h2>
+                        <p className="text-mute text-lg leading-relaxed">
+                            Niente carrello, niente bottone “acquista”. Qui non si compra un posto: si manda una candidatura, la leggo io, e i tre posti li assegno a mano.
+                        </p>
+                    </div>
+
+                    <div className="grid lg:grid-cols-5 gap-4">
+                        {/* prezzo */}
+                        <div className="reveal lg:col-span-2 panel p-8 border-mint/30 bg-mint/[0.04] flex flex-col">
+                            <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">prezzo di lancio · prima coorte</div>
+                            <div className="font-display font-medium text-5xl md:text-6xl text-fg leading-none tracking-tightest">€4.500</div>
+                            <div className="text-mute mt-3 leading-relaxed">
+                                in un’unica soluzione, oppure <span className="text-fg font-medium">€5.000</span> rateizzato.
+                            </div>
+                            <div className="h-px bg-line my-7" />
+                            <p className="text-mute leading-relaxed">
+                                Dentro c’è tutto: i tre mesi uno a uno, le sei call, il tuo sistema costruito su Claude Code, il supporto su email e Telegram tra una call e l’altra, e i materiali che restano tuoi per sempre.
+                            </p>
+                            <p className="text-dim text-sm leading-relaxed mt-4">
+                                Fuori c’è solo l’abbonamento a Claude (Pro o Max), che intesti tu e resta tuo anche dopo.
+                            </p>
+                        </div>
+
+                        {/* come si entra */}
+                        <div className="lg:col-span-3 stagger-group space-y-4">
+                            <div className="panel p-7 flex items-start gap-5">
+                                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-mint/10 border border-mint/25 text-mint shrink-0">
+                                    <FileText size={20} />
+                                </div>
+                                <div>
+                                    <div className="font-display font-medium text-xl text-fg mb-2">1. Mandi la candidatura</div>
+                                    <p className="text-mute leading-relaxed">
+                                        Compili il form qui sotto: cinque minuti, qualche domanda sul tuo lavoro e su cosa ti pesa. Le leggo tutte io, una per una, e ti rispondo in ogni caso.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="panel p-7 flex items-start gap-5">
+                                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-mint/10 border border-mint/25 text-mint shrink-0">
+                                    <Users size={20} />
+                                </div>
+                                <div>
+                                    <div className="font-display font-medium text-xl text-fg mb-2">2. Scelgo io, e guardo due cose</div>
+                                    <p className="text-mute leading-relaxed">
+                                        L’ordine di arrivo, perché mi sembra il modo più onesto. E se con il tuo lavoro posso aiutarti davvero: se penso di no, te lo dico e non ti faccio spendere dei soldi. Preferisco dire tre volte di no che seguire male una persona.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="panel p-7 flex items-start gap-5">
+                                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-mint/10 border border-mint/25 text-mint shrink-0">
+                                    <CalendarClock size={20} />
+                                </div>
+                                <div>
+                                    <div className="font-display font-medium text-xl text-fg mb-2">3. Ci sentiamo quindici minuti</div>
+                                    <p className="text-mute leading-relaxed">
+                                        Una chiacchierata senza impegno, per capire se ha senso per entrambi. Se ce l’ha, si parte a ottobre.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="reveal mt-4 panel p-6 flex items-start gap-3 border-mint/25 bg-mint/[0.03]">
+                        <Sparkles size={18} className="text-mint mt-0.5 shrink-0" />
+                        <p className="text-mute leading-relaxed">
+                            <span className="text-fg">È la prima coorte in assoluto, e il prezzo è quello di lancio.</span> Tre posti, poi chiudo le candidature. Quando aprirò la seconda, e a che prezzo, non l’ho ancora deciso: dipende da come va questa e da quanto tempo mi lascia. Non è una scadenza inventata per farti correre, è che oltre le tre persone non riesco a seguire nessuno come si deve.
                         </p>
                     </div>
                 </div>
@@ -578,7 +655,7 @@ const AiNelTuoLavoro = () => {
                     <div className="reveal max-w-xl mx-auto mb-8 rounded-lg bg-mint/[0.06] border border-mint/25 p-4 flex items-start gap-3">
                         <CalendarClock size={18} className="text-mint mt-0.5 shrink-0" />
                         <p className="text-mute text-sm leading-relaxed">
-                            I posti sono <span className="text-fg">tre</span>. Quando si chiudono, se ne riparla il prossimo anno, e con ogni probabilità a un prezzo più alto. Se è il tuo momento, questo è quello buono.
+                            I posti sono <span className="text-fg">tre</span>, ed è la prima coorte in assoluto. Quando si chiudono, chiudo: non ho ancora deciso quando aprirò la seconda, né a che prezzo. Se è il tuo momento, questo è quello buono.
                         </p>
                     </div>
                     <ApplicationForm />
