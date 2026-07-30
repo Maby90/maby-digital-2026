@@ -354,7 +354,7 @@ const AiNelTuoLavoro = () => {
                                 In tre mesi l’AI entra nel tuo lavoro di ogni giorno. La costruiamo insieme, con Claude Code e gli strumenti giusti per il tuo mestiere: un sistema su misura, che diventa tuo. Un percorso uno a uno, tre persone selezionate a coorte. Si parte a ottobre e si chiude a dicembre: il 2027 lo cominci con il sistema già rodato.
                             </p>
                             <p className="antl-sub mt-4 text-fg/80 text-base leading-relaxed max-w-2xl">
-                                Questa è la <span className="text-mint">prima coorte in assoluto</span>: tre posti, al prezzo di lancio di <span className="text-fg font-medium">€3.900</span>, anche in tre rate. Si entra per candidatura, e le candidature aprono a fine agosto: quando i tre posti sono presi chiudo. Quando riaprirò per la seconda, sinceramente, non lo so ancora.
+                                Questa è la <span className="text-mint">prima coorte in assoluto</span>: tre posti, al prezzo di lancio di <span className="text-fg font-medium">€3.900</span>, oppure tre rate da €1.400. Si entra per candidatura, e le candidature aprono a fine agosto: quando i tre posti sono presi chiudo. Quando riaprirò per la seconda, sinceramente, non lo so ancora.
                             </p>
                             <div className="antl-cta mt-10 flex flex-wrap items-center gap-3">
                                 <button onClick={scrollToForm} className="btn-primary">
@@ -652,7 +652,7 @@ const AiNelTuoLavoro = () => {
                             <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">prezzo di lancio · prima coorte</div>
                             <div className="font-display font-medium text-5xl md:text-6xl text-fg leading-none tracking-tightest">€3.900</div>
                             <div className="text-mute mt-3 leading-relaxed">
-                                in un’unica soluzione, oppure <span className="text-fg font-medium">tre rate da €1.300</span>, una al mese. Stesso prezzo.
+                                in un’unica soluzione, oppure <span className="text-fg font-medium">tre rate da €1.400</span>, una al mese.
                             </div>
                             <div className="h-px bg-line my-7" />
                             <p className="text-mute leading-relaxed">
@@ -931,7 +931,7 @@ const ApplicationForm = () => {
                 <div className="font-mono text-sm text-mint mb-4">$ candidatura --ricevuta</div>
                 <h3 className="font-display font-medium text-2xl text-fg mb-3">Grazie, ho letto tutto.</h3>
                 <p className="text-mute leading-relaxed max-w-md mx-auto mb-6">
-                    Voglio essere onesta: il percorso costa €3.900, anche in tre rate, e ha senso solo se in questo momento è un investimento sostenibile per te. Se ora non lo è, ti lascio due strade più leggere per iniziare comunque a lavorare con l’AI.
+                    Voglio essere onesta: il percorso costa €3.900, o tre rate da €1.400, e ha senso solo se in questo momento è un investimento sostenibile per te. Se ora non lo è, ti lascio due strade più leggere per iniziare comunque a lavorare con l’AI.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <a href="/newsletter" className="btn-ghost justify-center">Oltre il prompt <ArrowUpRight size={15} /></a>
@@ -1046,7 +1046,7 @@ const ApplicationForm = () => {
                 {step === 4 && (
                     <>
                         <div className="rounded-lg bg-elev/40 border border-line p-4 text-sm leading-relaxed text-mute">
-                            Il percorso completo è un investimento di <span className="text-fg font-medium">€3.900</span>, in un’unica soluzione oppure in <span className="text-fg font-medium">tre rate da €1.300</span>, una al mese, senza sovrapprezzo. Dentro c’è tutto: i tre mesi uno a uno, le sei call, il tuo sistema su Claude Code, il supporto su email e Telegram e i materiali che restano tuoi.
+                            Il percorso completo è un investimento di <span className="text-fg font-medium">€3.900</span>, in un’unica soluzione oppure in <span className="text-fg font-medium">tre rate da €1.400</span>, una al mese. Dentro c’è tutto: i tre mesi uno a uno, le sei call, il tuo sistema su Claude Code, il supporto su email e Telegram e i materiali che restano tuoi.
                         </div>
                         <div className="rounded-lg bg-mint/[0.06] border border-mint/25 p-4 text-sm leading-relaxed text-mute">
                             Prima di rispondere, fai un conto diverso: un altro anno intero a rifare a mano le stesse cose. Quelle ore, moltiplicate per quanto vale il tuo tempo, le stai già pagando adesso. E le paghi ogni anno. <span className="text-fg">Questo è l’unico costo che, invece, torna indietro.</span>
