@@ -46,6 +46,40 @@ const CATEGORIE = [
     { icon: Search, t: 'Ricerca e sintesi', d: 'Documenti, bandi e materiali lunghi ridotti a quello che ti serve.' },
 ];
 
+/* cose che partono da sole, senza che tu le chieda (task pianificati) */
+const AUTOMATISMI = [
+    {
+        quando: 'ogni mattina · 7:30',
+        t: 'La giornata già preparata',
+        d: 'Le mail che meritano una risposta oggi, gli appuntamenti, le due o tre cose che contano davvero. Quando apri il computer è già lì.',
+    },
+    {
+        quando: 'ogni lunedì · 9:00',
+        t: 'Cosa hanno fatto gli altri',
+        d: 'Siti, social e newsletter dei tuoi concorrenti, guardati e riassunti. Tu leggi mezza pagina invece di perderci un’ora.',
+    },
+    {
+        quando: 'ogni martedì · 18:00',
+        t: 'I follow-up che rimandi',
+        d: 'Chi non ti risponde da una settimana, chi aspetta un preventivo, chi ha chiuso e va risentito. Le mail sono già scritte: tu leggi e mandi.',
+    },
+    {
+        quando: 'ogni venerdì · 17:00',
+        t: 'I contenuti della settimana dopo',
+        d: 'Dalle tue idee, dalle call, da quello che hai scritto: bozze pronte da sistemare. Il foglio bianco del lunedì non esiste più.',
+    },
+    {
+        quando: 'il primo del mese',
+        t: 'Le scadenze e i conti',
+        d: 'Cosa va fatturato, cosa scade, cosa si rinnova. Un promemoria solo, con dentro le cose giuste.',
+    },
+    {
+        quando: 'quando arriva una richiesta',
+        t: 'La risposta già impostata',
+        d: 'Un nuovo contatto ti scrive: trovi la bozza di risposta pronta e la scheda del cliente già compilata. A te resta decidere.',
+    },
+];
+
 const scrollToForm = () => {
     const el = document.getElementById('candidati');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -95,6 +129,7 @@ const MATERIALI = [
 const FAQ = [
     ['“Non sono tecnico, ce la farò?”', 'Il percorso è pensato apposta per chi non scrive codice. Parli all’AI nella lingua del tuo lavoro, e io ti guido passo passo. Se sai usare Notion o la posta, hai già tutto quello che serve per partire.'],
     ['“Tre mesi bastano?”', 'Bastano se sono pieni. Il primo mese costruiamo, i due dopo li passi a usare il sistema sul lavoro vero mentre io lo aggiusto su quello che incontri. Serve quel tempo lì perché un modo nuovo di lavorare smetta di essere uno sforzo e diventi la tua normalità. Quello che non basta è guardare un corso e riprovarci da solo.'],
+    ['“E se una cosa parte da sola e sbaglia?”', 'Quello che esce verso l’esterno, come le mail ai clienti, si ferma un passo prima: trovi la bozza pronta e decidi tu se mandarla. Gira da solo quello che raccoglie, riassume e prepara. Se qualcosa si inceppa te ne accorgi subito, perché il risultato non arriva, e nel percorso impari a rimetterlo in piedi da solo.'],
     ['“Perché non mi basta un corso da 200 euro?”', 'I corsi te li sei già guardati, e infatti sei ancora qui a fare tutto a mano. La teoria uguale per tutti la trovi ovunque. Qui costruiamo il sistema sul tuo lavoro, e resto finché non gira davvero.'],
     ['“E se poi non lo uso?”', 'È la ragione per cui il percorso non finisce alla consegna e c’è la revisione di metà. Il mio lavoro è che tu le automazioni le usi, non che io te le consegni. Se qualcosa non entra nel tuo lavoro reale, lo cambiamo finché non entra.'],
     ['“Perché solo tre posti?”', 'Oltre i tre non riesco più a cucire il percorso addosso a ognuno, e diventerebbe un corso mascherato. Preferisco seguire bene poche persone.'],
@@ -429,6 +464,49 @@ const AiNelTuoLavoro = () => {
                     <p className="reveal text-dim text-sm mt-8 text-center">
                         E tutto quello che serve al tuo mestiere: il sistema si costruisce sul tuo lavoro, non su un modello standard.
                     </p>
+                </div>
+            </section>
+
+            {/* ---------- COSE CHE PARTONO DA SOLE ---------- */}
+            <section className="py-20 md:py-28 border-b border-line">
+                <div className="container-edge">
+                    <div className="reveal mb-12 max-w-3xl">
+                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// quello che parte da solo</div>
+                        <h2 className="font-display font-medium text-3xl md:text-5xl tracking-tight leading-tight mb-6">
+                            E poi c’è la parte che non devi nemmeno chiedere.
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-x-14 gap-y-5 text-mute text-lg leading-relaxed">
+                            <p>
+                                Finché sei tu ad aprire l’AI e a chiederle le cose, il lavoro resta tuo: ti devi ricordare, ti devi sedere, devi spiegare. Cambia poco.
+                            </p>
+                            <p className="text-fg">
+                                Il salto vero arriva quando certe cose partono da sole, nel giorno e all’ora che decidi tu, e ti trovi il risultato già fatto. Si chiamano task pianificati, e sono la parte del percorso che le persone rimpiangono di non aver montato prima.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="stagger-group space-y-3">
+                        {AUTOMATISMI.map(({ quando, t, d }) => (
+                            <div key={t} className="panel p-6 md:p-7 grid md:grid-cols-12 gap-3 md:gap-6 items-baseline">
+                                <div className="md:col-span-3 font-mono text-xs uppercase tracking-widest text-mint">
+                                    {quando}
+                                </div>
+                                <div className="md:col-span-4 font-display font-medium text-xl text-fg">
+                                    {t}
+                                </div>
+                                <p className="md:col-span-5 text-mute leading-relaxed">
+                                    {d}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="reveal mt-4 panel p-6 md:p-7 flex items-start gap-3 border-mint/25 bg-mint/[0.03]">
+                        <Clock size={18} className="text-mint mt-0.5 shrink-0" />
+                        <p className="text-mute leading-relaxed">
+                            <span className="text-fg">Questi sono esempi, non un menù da scegliere.</span> Nel percorso guardiamo la tua settimana vera e mettiamo in automatico le cose che rifai sempre uguali, con i tuoi orari. Il punto non è avere l’AI che ti risponde: è smettere di ricordarti di chiederglielo.
+                        </p>
+                    </div>
                 </div>
             </section>
 
