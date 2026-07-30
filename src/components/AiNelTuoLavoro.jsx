@@ -90,19 +90,19 @@ const scrollToForm = () => {
 const FASI = [
     {
         icon: Wrench,
-        tag: 'Mese 1',
+        tag: 'Ottobre',
         title: 'Si costruisce',
         body: 'Call ravvicinate, quasi settimanali. Installiamo tutto, colleghiamo i tuoi strumenti, montiamo le prime automazioni sui processi che ti mangiano più tempo. La parte tecnica la faccio io, a schermo condiviso, spiegandoti cosa sto facendo e perché.',
     },
     {
         icon: Repeat,
-        tag: 'Mese 2 – 3',
+        tag: 'Novembre – dicembre',
         title: 'Si consolida',
         body: 'Call più diradate e più strategiche. Tu lavori sul reale, incontri i casi veri, io aggiusto il sistema sul tuo mondo che cambia. A metà percorso ci fermiamo e ripianifichiamo su quello che serve davvero.',
     },
     {
         icon: ShieldCheck,
-        tag: 'Alla fine',
+        tag: 'Da gennaio',
         title: 'Vai avanti da solo',
         body: 'L’AI è dentro il tuo modo di lavorare, e il sistema regge senza di me. Quando qualcosa si rompe, sai sistemarlo con le tue mani.',
     },
@@ -351,7 +351,7 @@ const AiNelTuoLavoro = () => {
                                 <span className="text-mint"> concentrati su quello che conta.</span>
                             </h1>
                             <p className="antl-sub mt-8 text-mute text-lg md:text-xl leading-relaxed max-w-2xl">
-                                In tre mesi l’AI entra nel tuo lavoro di ogni giorno. La costruiamo insieme, con Claude Code e gli strumenti giusti per il tuo mestiere: un sistema su misura, che diventa tuo. Un percorso uno a uno, tre persone selezionate a coorte.
+                                In tre mesi l’AI entra nel tuo lavoro di ogni giorno. La costruiamo insieme, con Claude Code e gli strumenti giusti per il tuo mestiere: un sistema su misura, che diventa tuo. Un percorso uno a uno, tre persone selezionate a coorte. Si parte a ottobre e si chiude a dicembre: il 2027 lo cominci con il sistema già rodato.
                             </p>
                             <p className="antl-sub mt-4 text-fg/80 text-base leading-relaxed max-w-2xl">
                                 Questa è la <span className="text-mint">prima coorte in assoluto</span>: tre posti, al prezzo di lancio di <span className="text-fg font-medium">€3.900</span>, anche in tre rate. Si entra per candidatura, e quando i tre posti sono presi chiudo. Quando riaprirò per la seconda, sinceramente, non lo so ancora.
@@ -553,6 +553,13 @@ const AiNelTuoLavoro = () => {
                                 <p className="text-mute leading-relaxed">{body}</p>
                             </div>
                         ))}
+                    </div>
+
+                    <div className="reveal mt-4 panel p-7 md:p-8 border-mint/30 bg-mint/[0.04]">
+                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-4">ottobre, novembre, dicembre</div>
+                        <p className="text-fg/90 text-lg leading-relaxed max-w-4xl">
+                            Il percorso finisce con l’anno, e non è un caso. A gennaio la maggior parte delle persone riapre la casella mail e si ripromette che quest’anno l’AI la impara. Tu invece ci lavori dentro da tre mesi: il sistema gira, si è già rotto qualche volta e sai rimetterlo in piedi, e le cose che partono da sole partono da sole anche mentre sei in ferie. Tutto il 2027 lo fai con quel vantaggio, e con tre mesi di rodaggio che gli altri devono ancora cominciare.
+                        </p>
                     </div>
                 </div>
             </section>
