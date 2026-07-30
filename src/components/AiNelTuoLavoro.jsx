@@ -354,15 +354,15 @@ const AiNelTuoLavoro = () => {
                                 In tre mesi l’AI entra nel tuo lavoro di ogni giorno. La costruiamo insieme, con Claude Code e gli strumenti giusti per il tuo mestiere: un sistema su misura, che diventa tuo. Un percorso uno a uno, tre persone selezionate a coorte. Si parte a ottobre e si chiude a dicembre: il 2027 lo cominci con il sistema già rodato.
                             </p>
                             <p className="antl-sub mt-4 text-fg/80 text-base leading-relaxed max-w-2xl">
-                                Questa è la <span className="text-mint">prima coorte in assoluto</span>: tre posti, al prezzo di lancio di <span className="text-fg font-medium">€3.900</span>, anche in tre rate. Si entra per candidatura, e quando i tre posti sono presi chiudo. Quando riaprirò per la seconda, sinceramente, non lo so ancora.
+                                Questa è la <span className="text-mint">prima coorte in assoluto</span>: tre posti, al prezzo di lancio di <span className="text-fg font-medium">€3.900</span>, anche in tre rate. Si entra per candidatura, e le candidature aprono a fine agosto: quando i tre posti sono presi chiudo. Quando riaprirò per la seconda, sinceramente, non lo so ancora.
                             </p>
                             <div className="antl-cta mt-10 flex flex-wrap items-center gap-3">
                                 <button onClick={scrollToForm} className="btn-primary">
-                                    <span>Candidati per un posto</span>
+                                    <span>Avvisami quando apro</span>
                                     <ArrowRight size={16} />
                                 </button>
                                 <span className="text-dim text-sm font-mono">
-                                    Prima una call di 15 min, per capire se fa al caso tuo.
+                                    Candidature da fine agosto. Ti scrivo io.
                                 </span>
                             </div>
                         </div>
@@ -670,9 +670,9 @@ const AiNelTuoLavoro = () => {
                                     <FileText size={20} />
                                 </div>
                                 <div>
-                                    <div className="font-display font-medium text-xl text-fg mb-2">1. Mandi la candidatura</div>
+                                    <div className="font-display font-medium text-xl text-fg mb-2">1. Da fine agosto, mandi la candidatura</div>
                                     <p className="text-mute leading-relaxed">
-                                        Compili il form qui sotto: cinque minuti, qualche domanda sul tuo lavoro e su cosa ti pesa. Le leggo tutte io, una per una, e ti rispondo in ogni caso.
+                                        Qualche domanda sul tuo lavoro e su cosa ti pesa, cinque minuti. Le leggo tutte io, una per una, e ti rispondo in ogni caso. Fino all’apertura puoi lasciarmi nome e mail qui sotto e ti avviso io.
                                     </p>
                                 </div>
                             </div>
@@ -729,12 +729,12 @@ const AiNelTuoLavoro = () => {
             <section id="candidati" className="py-20 md:py-28">
                 <div className="container-edge max-w-2xl">
                     <div className="reveal text-center mb-8">
-                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// facciamo conoscenza</div>
+                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// candidature da fine agosto</div>
                         <h2 className="font-display font-medium text-3xl md:text-4xl tracking-tight leading-tight mb-4">
-                            Raccontami un po’ di te.
+                            Ti avviso io quando apro.
                         </h2>
                         <p className="text-mute text-lg leading-relaxed max-w-xl mx-auto">
-                            Ho messo giù qualche domanda per capire come lavori e se posso esserti davvero utile. Prenditi cinque minuti: più mi racconti, meglio riesco a capire se il percorso fa per te. Se ha senso per entrambi, ti scrivo io e ci facciamo una chiacchierata di 15 minuti, senza impegno.
+                            Le candidature aprono a fine agosto: da lì leggo tutto, faccio le call di conoscenza e assegno i tre posti. Se vuoi esserci, lasciami nome e mail adesso: quando apro te lo scrivo io, prima che agli altri, così non devi ricordarti di tornare a controllare.
                         </p>
                     </div>
                     <div className="reveal max-w-xl mx-auto mb-8 rounded-lg bg-mint/[0.06] border border-mint/25 p-4 flex items-start gap-3">
@@ -743,7 +743,7 @@ const AiNelTuoLavoro = () => {
                             I posti sono <span className="text-fg">tre</span>, ed è la prima coorte in assoluto. Quando si chiudono, chiudo: non ho ancora deciso quando aprirò la seconda, né a che prezzo. Se è il tuo momento, questo è quello buono.
                         </p>
                     </div>
-                    <ApplicationForm />
+                    <InterestForm />
                 </div>
             </section>
 
@@ -781,6 +781,90 @@ const STEPS = [
 const Field = ({ label, children }) => (
     <div><label className={labelClass}>{label}</label>{children}</div>
 );
+
+/* ------------------------------------------------------------------ *
+ * Lista d'interesse (fase pre-apertura).
+ * Le candidature aprono a fine agosto: fino ad allora la pagina raccoglie
+ * solo nome, mail e professione. Poi si torna a <ApplicationForm />.
+ * ------------------------------------------------------------------ */
+
+const InterestForm = () => {
+    const [data, setData] = useState({ nome: '', email: '', professione: '' });
+    const [status, setStatus] = useState('idle'); // idle | loading | success | error
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const set = (name) => (e) => setData((p) => ({ ...p, [name]: e.target.value }));
+    const valid = data.nome.trim() !== '' && data.email.trim() !== '';
+
+    const submit = async (e) => {
+        e.preventDefault();
+        if (!valid || status === 'loading') return;
+        setStatus('loading');
+        setErrorMsg('');
+        try {
+            const r = await fetch('/api/interesse', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...data, origine: 'landing-ai-nel-tuo-lavoro' }),
+            });
+            const out = await r.json().catch(() => ({}));
+            if (r.ok && out.ok) {
+                setStatus('success');
+                if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                    window.fbq('track', 'Lead');
+                }
+            } else {
+                setStatus('error');
+                setErrorMsg(out.error || 'Non sono riuscita a salvarti, riprova tra un minuto');
+            }
+        } catch {
+            setStatus('error');
+            setErrorMsg('Connessione ballerina, riprova tra un minuto');
+        }
+    };
+
+    if (status === 'success') {
+        return (
+            <div className="panel p-8 text-center">
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-mint/15 border border-mint/30 text-mint mx-auto mb-5">
+                    <Check size={22} />
+                </div>
+                <h3 className="font-display font-medium text-2xl text-fg mb-3">Ci sei, {data.nome.split(' ')[0]}.</h3>
+                <p className="text-mute leading-relaxed max-w-md mx-auto">
+                    Quando apro le candidature, a fine agosto, te lo scrivo io e lo sai prima degli altri. Nel frattempo non ti mando niente di inutile: hai la mia parola.
+                </p>
+            </div>
+        );
+    }
+
+    return (
+        <form onSubmit={submit} className="panel p-7 md:p-8 space-y-5">
+            <Field label="Come ti chiami *">
+                <input required className={inputClass} value={data.nome} onChange={set('nome')} placeholder="Nome e cognome" autoComplete="name" />
+            </Field>
+            <Field label="La tua mail *">
+                <input required type="email" className={inputClass} value={data.email} onChange={set('email')} placeholder="dove ti scrivo quando apro" autoComplete="email" />
+            </Field>
+            <Field label="Che lavoro fai">
+                <input className={inputClass} value={data.professione} onChange={set('professione')} placeholder="Avvocata, consulente, architetto…" />
+            </Field>
+
+            {status === 'error' && (
+                <div className="flex items-start gap-2 text-sm text-red-300">
+                    <AlertCircle size={16} className="mt-0.5 shrink-0" />
+                    <span>{errorMsg}</span>
+                </div>
+            )}
+
+            <button type="submit" disabled={!valid || status === 'loading'} className="btn-primary w-full justify-center disabled:opacity-40 disabled:cursor-not-allowed">
+                {status === 'loading' ? <><Loader2 size={16} className="animate-spin" /> <span>Un secondo…</span></> : <><span>Avvisami quando apro</span> <ArrowRight size={16} /></>}
+            </button>
+            <p className="text-dim text-xs leading-relaxed text-center">
+                Non è una candidatura e non ti impegna a niente. Serve solo perché a fine agosto ti scriva io, invece di sperare che ti ricordi di tornare.
+            </p>
+        </form>
+    );
+};
 
 const ApplicationForm = () => {
     const [step, setStep] = useState(0);
