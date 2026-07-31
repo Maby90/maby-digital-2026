@@ -80,6 +80,30 @@ const AUTOMATISMI = [
     },
 ];
 
+/* cose che prima non erano sul tavolo (capacità nuova, non velocità) */
+const NUOVE_COSE = [
+    {
+        icon: Globe,
+        t: 'La pagina del servizio nuovo',
+        d: 'Finora voleva dire un preventivo, due settimane di attesa e il servizio fermo nel cassetto. Adesso la metti online in un pomeriggio e la cambi quando ti pare.',
+    },
+    {
+        icon: Boxes,
+        t: 'Un’area riservata ai tuoi clienti',
+        d: 'Materiali, avanzamento e documenti in un posto solo, con il tuo nome sopra. Il tipo di cosa per cui finora bisognava chiamare qualcuno.',
+    },
+    {
+        icon: Search,
+        t: 'Duecento documenti letti sul serio',
+        d: 'Bandi, contratti, verbali, risposte di un questionario. Materiale che a mano non avresti mai aperto tutto, e che diventa una scheda con dentro solo quello che ti serve.',
+    },
+    {
+        icon: PenTool,
+        t: 'Il canale che rimandi da due anni',
+        d: 'La newsletter, i contenuti, il podcast. Restavano fuori per mancanza di tempo, e il tempo si libera quando la prima stesura non la scrivi più tu.',
+    },
+];
+
 const scrollToForm = () => {
     const el = document.getElementById('candidati');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -510,6 +534,45 @@ const AiNelTuoLavoro = () => {
                 </div>
             </section>
 
+            {/* ---------- COSE CHE PRIMA NON POTEVI FARE ---------- */}
+            <section className="py-20 md:py-28 border-b border-line">
+                <div className="container-edge">
+                    <div className="reveal mb-12 max-w-3xl">
+                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// la parte che non ti aspetti</div>
+                        <h2 className="font-display font-medium text-3xl md:text-5xl tracking-tight leading-tight mb-6">
+                            Poi consegni una cosa che prima avresti lasciato perdere.
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-x-14 gap-y-5 text-mute text-lg leading-relaxed">
+                            <p>
+                                Le ore che tornano sono la prima metà del percorso. La seconda arriva verso il secondo mese, quando ti accorgi che certe cose sono diventate alla tua portata. Cose che finora scartavi prima ancora di valutarle, perché volevano un preventivo, un fornitore e tre settimane.
+                            </p>
+                            <p className="text-fg">
+                                Un cliente ti chiede un extra e stavolta glielo dai. Un’idea ferma da un anno la provi il sabato mattina. Il tuo lavoro smette di essere lo stesso lavoro fatto più in fretta, e comincia ad allargarsi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="stagger-group grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {NUOVE_COSE.map(({ icon: Icon, t, d }) => (
+                            <div key={t} className="panel p-6">
+                                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-mint/10 border border-mint/25 text-mint mb-4">
+                                    <Icon size={18} />
+                                </div>
+                                <div className="font-display font-medium text-lg text-fg mb-2">{t}</div>
+                                <p className="text-mute text-sm leading-relaxed">{d}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="reveal mt-4 panel p-6 md:p-7 flex items-start gap-3 border-mint/25 bg-mint/[0.03]">
+                        <Sparkles size={18} className="text-mint mt-0.5 shrink-0" />
+                        <p className="text-mute leading-relaxed">
+                            <span className="text-fg">Nel mio caso questa è stata la parte più grossa.</span> I siti che prima commissionavo, l’app che mi sono costruita da sola, il lavoro sui contenuti che gira mentre dormo. Nessuna di queste è la stessa cosa di prima fatta più in fretta: sono cose che senza l’AI non avrei proprio fatto. Quali saranno le tue dipende dal tuo mestiere, e le scopriamo strada facendo.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* ---------- COME SARAI (oggi/dopo) ---------- */}
             <section className="py-20 md:py-24 border-b border-line">
                 <div className="container-edge">
@@ -526,7 +589,7 @@ const AiNelTuoLavoro = () => {
                                 <Sparkles size={13} /> dopo tre mesi
                             </div>
                             <p className="text-fg/90 text-lg leading-relaxed">
-                                Apri il tuo sistema, scrivi in una riga quello che ti serve, e la parte ripetitiva è già fatta. I contenuti, i follow-up, i riassunti, la preparazione delle call, i primi draft delle mail partono da soli. Tu rifinisci, e il tempo torna al lavoro che conta.
+                                Apri il tuo sistema, scrivi in una riga quello che ti serve, e la parte ripetitiva è già fatta. I contenuti, i follow-up, i riassunti, la preparazione delle call, i primi draft delle mail partono da soli. Tu rifinisci, e il tempo torna al lavoro che conta. Ogni tanto ti ritrovi anche a dire di sì a cose che un anno fa avresti rimandato.
                             </p>
                         </div>
                     </div>
