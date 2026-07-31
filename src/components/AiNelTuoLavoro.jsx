@@ -104,6 +104,40 @@ const NUOVE_COSE = [
     },
 ];
 
+/* la stessa cosa, mestiere per mestiere */
+const ESEMPI_MESTIERE = [
+    {
+        chi: 'avvocato',
+        t: 'Il portale dove il cliente segue la pratica',
+        d: 'Stato aggiornato, documenti, prossime scadenze, ognuno vede solo il suo. Quello che finora gestivi a mail e telefonate, e che negli studi grandi c’è da anni.',
+    },
+    {
+        chi: 'nutrizionista',
+        t: 'Lo strumento che usano i tuoi pazienti',
+        d: 'Segnano cosa mangiano, tu ti trovi il riepilogo il giorno prima della visita. Una cosa tua, con il tuo nome sopra, senza pagare l’abbonamento a un gestionale.',
+    },
+    {
+        chi: 'architetto',
+        t: 'Una pagina per ogni cantiere',
+        d: 'Render, avanzamento, scelte da approvare, tutto in un link che mandi al cliente. Al posto del pdf da quaranta mega che nessuno apre dal telefono.',
+    },
+    {
+        chi: 'marketing freelance',
+        t: 'I servizi che finora rifiutavi',
+        d: 'Report mensili, monitoraggio dei competitor del cliente, contenuti in volume su più canali. Roba che voleva un collaboratore, quindi dicevi di no e basta.',
+    },
+    {
+        chi: 'commercialista',
+        t: 'Il bilancio spiegato a chi non lo sa leggere',
+        d: 'Tre paragrafi in italiano su come è andato l’anno, con le due cose da guardare. Per tutti i clienti, non solo per i tre che se lo meritano in termini di tempo.',
+    },
+    {
+        chi: 'consulente',
+        t: 'Lo strumento che ti porta i contatti',
+        d: 'Un calcolatore, un test, una diagnosi rapida sul tuo sito: chi lo usa lascia i dati e arriva già scaldato. Prima voleva un preventivo a uno sviluppatore.',
+    },
+];
+
 const scrollToForm = () => {
     const el = document.getElementById('candidati');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -567,9 +601,31 @@ const AiNelTuoLavoro = () => {
                     <div className="reveal mt-4 panel p-6 md:p-7 flex items-start gap-3 border-mint/25 bg-mint/[0.03]">
                         <Sparkles size={18} className="text-mint mt-0.5 shrink-0" />
                         <p className="text-mute leading-relaxed">
-                            <span className="text-fg">Nel mio caso questa è stata la parte più grossa.</span> I siti che prima commissionavo, l’app che mi sono costruita da sola, il lavoro sui contenuti che gira mentre dormo. Nessuna di queste è la stessa cosa di prima fatta più in fretta: sono cose che senza l’AI non avrei proprio fatto. Quali saranno le tue dipende dal tuo mestiere, e le scopriamo strada facendo.
+                            <span className="text-fg">Nel mio caso questa è stata la parte più grossa.</span> I siti che prima commissionavo, l’app che mi sono costruita da sola, il lavoro sui contenuti che gira mentre dormo. Nessuna di queste è la stessa cosa di prima fatta più in fretta: sono cose che senza l’AI non avrei proprio fatto. Quali saranno le tue dipende dal tuo mestiere.
                         </p>
                     </div>
+
+                    <div className="reveal mt-14 mb-4 font-mono text-xs uppercase tracking-widest text-dim">
+                        qualche esempio, mestiere per mestiere
+                    </div>
+                    <div className="stagger-group space-y-3">
+                        {ESEMPI_MESTIERE.map(({ chi, t, d }) => (
+                            <div key={chi} className="panel p-6 md:p-7 grid md:grid-cols-12 gap-3 md:gap-6 items-baseline">
+                                <div className="md:col-span-3 font-mono text-xs uppercase tracking-widest text-mint">
+                                    {chi}
+                                </div>
+                                <div className="md:col-span-4 font-display font-medium text-xl text-fg">
+                                    {t}
+                                </div>
+                                <p className="md:col-span-5 text-mute leading-relaxed">
+                                    {d}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="reveal text-dim text-sm mt-6 text-center">
+                        Il tuo mestiere non è in elenco? Il ragionamento è lo stesso: si parte da quello che oggi lasci fuori perché costa troppo farlo fare a qualcuno.
+                    </p>
                 </div>
             </section>
 
