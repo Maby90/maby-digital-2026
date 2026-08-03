@@ -49,6 +49,11 @@ const routes = [
         description: 'Scarica la skill che uso per generare schemi e lavagne Excalidraw con Claude: flussi, timeline, confronti, mappe. Gratis, senza abbonamenti.',
     },
     {
+        path: '/agente-fascicolo',
+        title: 'Agente fascicolo cliente, gratis | Maby Prochilo',
+        description: 'Scarica l\'agente Claude che prende il materiale sparso di un cliente e ti restituisce lo stato: cosa è deciso, cosa è aperto, cosa scade, di chi è la prossima mossa.',
+    },
+    {
         path: '/workflow-call',
         title: 'Workflow: da una call ai 4 contenuti | Maby Prochilo',
         description: 'Da una call di 30 minuti a 4 contenuti diversi (post LinkedIn, newsletter, reel, carosello). Workflow + 4 prompt Claude. Iscriviti per scaricare il PDF.',

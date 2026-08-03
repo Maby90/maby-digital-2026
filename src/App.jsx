@@ -24,6 +24,7 @@ import OltreIlPrompt from './components/OltreIlPrompt';
 import NewsletterPreview from './components/NewsletterPreview';
 import SkillCarosello from './components/SkillCarosello';
 import SkillLavagne from './components/SkillLavagne';
+import AgenteFascicolo from './components/AgenteFascicolo';
 import WorkflowCall from './components/WorkflowCall';
 import Faq from './components/Faq';
 import MiniAppClaudeCode from './components/MiniAppClaudeCode';
@@ -72,6 +73,7 @@ function App() {
         <Route path="/newsletter" element={<OltreIlPrompt />} />
         <Route path="/skill-carosello" element={<SkillCarosello />} />
         <Route path="/skill-lavagne" element={<SkillLavagne />} />
+        <Route path="/agente-fascicolo" element={<AgenteFascicolo />} />
         <Route path="/workflow-call" element={<WorkflowCall />} />
         <Route path="/miniapp-claudecode" element={<MiniAppClaudeCode />} />
         <Route path="/ai-nel-tuo-lavoro" element={<AiNelTuoLavoro />} />
