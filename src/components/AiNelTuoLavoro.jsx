@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
-    Check, ArrowUpRight, ArrowRight, ArrowLeft, Loader2, AlertCircle,
+    Check, ArrowUpRight, ArrowRight, ArrowLeft, ArrowDown, Loader2, AlertCircle,
     Wrench, Repeat, ShieldCheck, Sparkles, FileText, Terminal, Plug,
     LifeBuoy, Video, Boxes, Award, BookOpen, Users, CalendarClock, Cpu, Headset,
     Radar, PenTool, Globe, Search, Send, Clock,
@@ -137,6 +137,82 @@ const ESEMPI_MESTIERE = [
         d: 'Un calcolatore, un test, una diagnosi rapida sul tuo sito: chi lo usa lascia i dati e arriva già scaldato. Prima voleva un preventivo a uno sviluppatore.',
     },
 ];
+
+/* cose che oggi si delegano e si pagano, e che dopo il percorso ti fai da solo.
+   Cifre = ordine di grandezza del mercato italiano (freelance o piccola agenzia),
+   calcolate sul primo anno. Non sono preventivi. */
+const COSE_DELEGATE = [
+    {
+        icon: Globe, t: 'Il tuo sito, aggiornabile da te',
+        base: 'sito vetrina 5-7 pagine, più le modifiche dell’anno',
+        d: 'Lo costruisci con i tuoi colori e lo cambi il giorno stesso, senza scrivere a nessuno.',
+        min: 1500, max: 3500, on: true,
+    },
+    {
+        icon: FileText, t: 'Le landing dei tuoi servizi',
+        base: '€600-1.500 a pagina, due nell’anno',
+        d: 'Una pagina nuova per ogni servizio o promozione, pronta in un pomeriggio.',
+        min: 1200, max: 3000, on: true,
+    },
+    {
+        icon: BookOpen, t: 'Il blog che si aggiorna da solo',
+        base: 'copywriter SEO, 4 articoli al mese',
+        d: 'Gli articoli si scrivono, si ottimizzano e si pubblicano da soli, sui temi che decidi tu.',
+        min: 3800, max: 7000, on: true,
+    },
+    {
+        icon: Users, t: 'La gestione dei social',
+        base: 'social media manager, €400-1.200 al mese',
+        d: 'Piano editoriale, testi e pubblicazione programmata, con la tua voce dentro il sistema.',
+        min: 4800, max: 14400, on: true,
+    },
+    {
+        icon: PenTool, t: 'Grafiche e caroselli',
+        base: '€30-80 l’uno, 8 al mese',
+        d: 'Caroselli e grafiche on-brand generati dal tuo sistema, non uno alla volta a mano.',
+        min: 2900, max: 7700, on: false,
+    },
+    {
+        icon: Send, t: 'La newsletter',
+        base: '€150-300 a numero, due al mese',
+        d: 'Dalla prima stesura all’invio, con dentro quello che hai già scritto e detto durante il mese.',
+        min: 3600, max: 7200, on: false,
+    },
+    {
+        icon: Sparkles, t: 'Il lancio di un corso o di un servizio',
+        base: 'funnel completo: pagina, email, pagamenti',
+        d: 'Pagina di vendita, sequenza email e checkout montati da te, e rifatti al lancio dopo.',
+        min: 1500, max: 4000, on: false,
+    },
+    {
+        icon: Boxes, t: 'L’area riservata ai clienti',
+        base: 'sviluppo su misura, una tantum',
+        d: 'Materiali, avanzamento e documenti in un posto solo, con il tuo nome sopra.',
+        min: 3000, max: 8000, on: false,
+    },
+    {
+        icon: Repeat, t: 'Le automazioni tra i tuoi strumenti',
+        base: 'consulente automazioni, setup iniziale',
+        d: 'Posta, calendario, Notion o Drive che si parlano tra loro senza copia-incolla.',
+        min: 800, max: 2500, on: false,
+    },
+    {
+        icon: Radar, t: 'Il monitoraggio dei competitor',
+        base: 'assistente o agenzia, €200-500 al mese',
+        d: 'Il report arriva il lunedì mattina, già letto e riassunto.',
+        min: 2400, max: 6000, on: false,
+    },
+    {
+        icon: Video, t: 'I reel montati',
+        base: '€50-150 l’uno, 4 al mese',
+        d: 'Script, sottotitoli e montaggio preparati dal sistema, tu registri e pubblichi.',
+        min: 2400, max: 7200, on: false,
+    },
+];
+
+const PREZZO_PERCORSO = 3900;
+
+const euro = (n) => '€' + Math.round(n).toLocaleString('it-IT', { useGrouping: 'always' });
 
 const scrollToForm = () => {
     const el = document.getElementById('candidati');
@@ -343,6 +419,169 @@ const SkillTerminal = () => {
         </div>
     );
 };
+
+/* ---- quanto costerebbe farselo fare da fuori --------------------- */
+
+const AnimatedEuro = ({ value, className }) => {
+    const ref = useRef(null);
+    const prev = useRef(0);
+    useGSAP(() => {
+        if (!ref.current) return;
+        if (!motionOK()) { ref.current.textContent = euro(value); prev.current = value; return; }
+        const obj = { v: prev.current };
+        gsap.to(obj, {
+            v: value, duration: 0.7, ease: 'power2.out',
+            onUpdate: () => { if (ref.current) ref.current.textContent = euro(obj.v); },
+        });
+        prev.current = value;
+    }, { dependencies: [value] });
+    return <span ref={ref} className={className}>{euro(value)}</span>;
+};
+
+const CostSimulator = () => {
+    const [sel, setSel] = useState(() => COSE_DELEGATE.map((c) => c.on));
+
+    const toggle = (i) => setSel((s) => s.map((v, j) => (j === i ? !v : v)));
+
+    const min = COSE_DELEGATE.reduce((tot, c, i) => (sel[i] ? tot + c.min : tot), 0);
+    const max = COSE_DELEGATE.reduce((tot, c, i) => (sel[i] ? tot + c.max : tot), 0);
+    const scelte = sel.filter(Boolean).length;
+    const volte = min > 0 ? Math.round(min / PREZZO_PERCORSO) : 0;
+    const risparmio = Math.max(0, min - PREZZO_PERCORSO);
+
+    return (
+        <div className="grid lg:grid-cols-12 gap-4">
+            <div className="lg:col-span-7 stagger-group grid sm:grid-cols-2 gap-3">
+                {COSE_DELEGATE.map(({ icon: Icon, t, base, d, min: cmin, max: cmax }, i) => (
+                    <button
+                        key={t}
+                        type="button"
+                        onClick={() => toggle(i)}
+                        aria-pressed={sel[i]}
+                        className={`panel p-5 text-left transition-colors ${sel[i]
+                            ? 'border-mint/40 bg-mint/[0.05]'
+                            : 'opacity-60 hover:opacity-100'}`}
+                    >
+                        <div className="flex items-start gap-3">
+                            <div className={`flex items-center justify-center w-9 h-9 rounded-lg shrink-0 border ${sel[i]
+                                ? 'bg-mint/15 border-mint/30 text-mint'
+                                : 'bg-elev/40 border-line text-dim'}`}>
+                                {sel[i] ? <Check size={16} /> : <Icon size={16} />}
+                            </div>
+                            <div className="min-w-0">
+                                <div className="font-display font-medium text-base text-fg leading-snug">{t}</div>
+                                <div className="font-mono text-[11px] text-mute mt-1.5 tabular-nums">
+                                    delegato: {euro(cmin)} – {euro(cmax)}
+                                </div>
+                                <div className="text-dim text-[11px] mt-0.5 leading-relaxed">{base}</div>
+                                <p className="text-mute text-sm leading-relaxed mt-2.5">{d}</p>
+                            </div>
+                        </div>
+                    </button>
+                ))}
+            </div>
+
+            <div className="lg:col-span-5">
+                <div className="panel p-7 md:p-8 lg:sticky lg:top-24 border-mint/30 bg-mint/[0.04]">
+                    <div className="font-mono text-xs uppercase tracking-widest text-mint mb-6 flex items-center gap-2">
+                        <Sparkles size={13} /> il confronto
+                    </div>
+
+                    {/* riga 1: quello che pagheresti fuori (NON è il prezzo) */}
+                    <div className="rounded-xl border border-line bg-bg/60 p-5">
+                        <div className="font-mono text-[11px] uppercase tracking-widest text-dim mb-3">
+                            se lo fai fare a qualcun altro
+                        </div>
+                        {scelte === 0 ? (
+                            <p className="text-mute leading-relaxed">
+                                Togli tutto e resta zero, ma anche il tuo lavoro resta com’è adesso.
+                            </p>
+                        ) : (
+                            <>
+                                <div className="font-display font-medium text-2xl md:text-3xl text-mute leading-none tracking-tight tabular-nums line-through decoration-mute/40 decoration-[3px]">
+                                    <AnimatedEuro value={min} />
+                                    <span className="mx-1">–</span>
+                                    <AnimatedEuro value={max} />
+                                </div>
+                                <div className="mt-4 h-2.5 rounded-full bg-elev/60 overflow-hidden">
+                                    <div className="h-full w-full rounded-full bg-fg/25" />
+                                </div>
+                                <div className="text-dim text-xs mt-3 leading-relaxed">
+                                    {scelte === 1 ? 'una sola voce' : `${scelte} voci`} · solo il primo anno, e l’anno dopo ricominci a pagarne la maggior parte
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    <div className="flex items-center gap-3 my-4">
+                        <div className="h-px flex-1 bg-line" />
+                        <ArrowDown size={16} className="text-mint shrink-0" />
+                        <div className="h-px flex-1 bg-line" />
+                    </div>
+
+                    {/* riga 2: il prezzo vero */}
+                    <div className="rounded-xl border border-mint/40 bg-mint/[0.07] p-5">
+                        <div className="font-mono text-[11px] uppercase tracking-widest text-mint mb-3">
+                            quello che paghi qui, una volta sola
+                        </div>
+                        <div className="flex items-baseline gap-3">
+                            <div className="font-display font-medium text-4xl md:text-5xl text-mint leading-none tracking-tightest tabular-nums">
+                                {euro(PREZZO_PERCORSO)}
+                            </div>
+                            <div className="text-mute text-sm">tutto compreso</div>
+                        </div>
+                        <div className="mt-4 h-2.5 rounded-full bg-elev/60 overflow-hidden">
+                            <div
+                                className="h-full rounded-full bg-mint transition-[width] duration-700 ease-out"
+                                style={{ width: `${scelte === 0 ? 100 : Math.max(6, Math.min(100, (PREZZO_PERCORSO / min) * 100))}%` }}
+                            />
+                        </div>
+                        <div className="text-mute text-xs mt-3 leading-relaxed">
+                            e dentro c’è tutto il percorso, non solo queste cose
+                        </div>
+                    </div>
+
+                    {risparmio > 0 && (
+                        <div className="mt-4 rounded-lg bg-bg border border-line p-4 text-mute text-sm leading-relaxed">
+                            Il primo anno ti restano in tasca almeno <span className="text-fg font-medium tabular-nums">{euro(risparmio)}</span>
+                            {volte >= 2 && <> ({volte} volte il costo del percorso)</>}. Dal secondo anno in poi rifai queste cose a costo zero.
+                        </div>
+                    )}
+                    <p className="text-mute text-sm leading-relaxed mt-5">
+                        Alla fine del percorso queste cose te le fai da te, quante volte vuoi, senza chiedere un preventivo a nessuno.
+                    </p>
+                    <button onClick={scrollToForm} className="btn-primary w-full justify-center mt-6">
+                        Avvisami quando apro <ArrowRight size={16} />
+                    </button>
+                    <p className="text-dim text-[11px] leading-relaxed mt-5">
+                        Cifre indicative del mercato italiano (freelance o piccola agenzia), sul primo anno. Servono a dare un ordine di grandezza, non sono preventivi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+/* ---- modulo intermedio: la stessa lista d'interesse del fondo pagina,
+   piazzata a metà per chi non arriva in fondo. Stesso form, stesso
+   endpoint /api/interesse, stesso gruppo MailerLite. ---------------- */
+
+const InterestBreak = ({ kicker, title, text }) => (
+    <section className="py-16 md:py-20 border-b border-line bg-elev/20">
+        <div className="container-edge max-w-2xl">
+            <div className="reveal text-center mb-7">
+                <div className="font-mono text-xs uppercase tracking-widest text-mint mb-4">{kicker}</div>
+                <h2 className="font-display font-medium text-2xl md:text-3xl tracking-tight leading-tight mb-4">
+                    {title}
+                </h2>
+                <p className="text-mute leading-relaxed">{text}</p>
+            </div>
+            <div className="reveal">
+                <InterestForm />
+            </div>
+        </div>
+    </section>
+);
 
 /* ================================================================== */
 
@@ -568,6 +807,13 @@ const AiNelTuoLavoro = () => {
                 </div>
             </section>
 
+            {/* ---------- LISTA D'INTERESSE (intermedia 1) ---------- */}
+            <InterestBreak
+                kicker="// prima di andare avanti"
+                title="Ti sta già interessando? Non serve leggere fino in fondo."
+                text="Le candidature aprono a fine agosto e i posti sono tre. Lasciami nome e mail qui: quando apro te lo scrivo io, prima che agli altri. Poi torni a leggere il resto con calma."
+            />
+
             {/* ---------- COSE CHE PRIMA NON POTEVI FARE ---------- */}
             <section className="py-20 md:py-28 border-b border-line">
                 <div className="container-edge">
@@ -751,6 +997,42 @@ const AiNelTuoLavoro = () => {
                     </div>
                 </div>
             </section>
+
+            {/* ---------- QUANTO COSTEREBBE DELEGARLO ---------- */}
+            <section className="py-20 md:py-28 border-b border-line">
+                <div className="container-edge">
+                    <div className="reveal mb-12 max-w-3xl">
+                        <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// quello che smetti di pagare</div>
+                        <h2 className="font-display font-medium text-3xl md:text-5xl tracking-tight leading-tight mb-6">
+                            Le cose che oggi paghi a qualcun altro, dopo te le fai da solo.
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-x-14 gap-y-5 text-mute text-lg leading-relaxed">
+                            <p>
+                                Il sito che vorresti rifare, il blog che non aggiorni mai, i social che qualcuno ti gestisce a mese, la landing del servizio nuovo, il lancio del corso che rimandi. Ognuna di queste cose oggi ha un prezzo, e lo paghi ogni volta che ti serve.
+                            </p>
+                            <p className="text-fg">
+                                Dopo tre mesi le costruisci con il tuo sistema, in un pomeriggio, e le rifai quante volte vuoi senza chiedere niente a nessuno. Qui sotto togli e aggiungi quelle che ti riguardano davvero: a destra vedi quanto ti costerebbero delegate, e quanto costa invece il percorso.
+                            </p>
+                        </div>
+                    </div>
+
+                    <CostSimulator />
+
+                    <div className="reveal mt-4 panel p-6 md:p-7 flex items-start gap-3 border-mint/25 bg-mint/[0.03]">
+                        <ShieldCheck size={18} className="text-mint mt-0.5 shrink-0" />
+                        <p className="text-mute leading-relaxed">
+                            <span className="text-fg">Mettiamola chiara: non ti consegno io un sito e un blog chiavi in mano.</span> Alla fine dei tre mesi sei tu a saperteli fare, con il sistema che abbiamo costruito insieme: la prima volta la facciamo in call a schermo condiviso, dalla seconda in poi vai da solo. Quello che ti porti a casa è la capacità di rifarle, tutte le volte che ti servono.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* ---------- LISTA D'INTERESSE (intermedia 2) ---------- */}
+            <InterestBreak
+                kicker="// se i conti ti tornano"
+                title="Se il conto ti torna, mettiti in lista adesso."
+                text="Sotto ci sono il prezzo, come si entra e le domande che ti stai facendo. Ma se hai già capito che è roba per te, lasciami nome e mail: a fine agosto ti avviso io, senza che tu debba ricordarti di tornare qui."
+            />
 
             {/* ---------- PREZZO E ACCESSO ---------- */}
             <section className="py-20 md:py-28 border-b border-line">
