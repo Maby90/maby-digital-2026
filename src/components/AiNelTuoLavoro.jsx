@@ -10,6 +10,7 @@ import { gsap, ScrollTrigger, SplitText, EASE, motionOK } from '../lib/gsap';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import useSeo from '../hooks/useSeo';
+import { OndaMail, TriageMail, SchedaUnica, MicroDemos } from './DemoProfessionisti';
 
 /* ------------------------------------------------------------------ *
  * "AI nel tuo lavoro" — landing affiancamento 1:1 (3 mesi, 3 posti)
@@ -734,6 +735,9 @@ const AiNelTuoLavoro = () => {
                 </div>
             </section>
 
+            {/* ---------- L'ONDA DI POSTA (demo animata) ---------- */}
+            <OndaMail />
+
             {/* ---------- COSA FACCIAMO DAVVERO ---------- */}
             <section className="py-20 md:py-28 border-b border-line">
                 <div className="container-edge max-w-5xl">
@@ -798,6 +802,9 @@ const AiNelTuoLavoro = () => {
                 </div>
             </section>
 
+            {/* ---------- TRIAGE DELLA POSTA (demo animata) ---------- */}
+            <TriageMail />
+
             {/* ---------- COSE CHE PARTONO DA SOLE ---------- */}
             <section className="py-20 md:py-28 border-b border-line">
                 <div className="container-edge">
@@ -848,6 +855,9 @@ const AiNelTuoLavoro = () => {
                 text="Le candidature aprono a fine agosto e i posti sono tre. Lasciami nome e mail: quando apro te lo scrivo io, prima che agli altri."
                 nota="Più sotto trovi il conto fatto sulle voci che riguardano davvero te."
             />
+
+            {/* ---------- QUATTRO MOTORINI (demo animate) ---------- */}
+            <MicroDemos />
 
             {/* ---------- COSE CHE PRIMA NON POTEVI FARE ---------- */}
             <section className="py-20 md:py-28 border-b border-line">
@@ -909,6 +919,9 @@ const AiNelTuoLavoro = () => {
                     </p>
                 </div>
             </section>
+
+            {/* ---------- SCHEDA UNICA (demo animata) ---------- */}
+            <SchedaUnica />
 
             {/* ---------- COME SARAI (oggi/dopo) ---------- */}
             <section className="py-20 md:py-24 border-b border-line">
