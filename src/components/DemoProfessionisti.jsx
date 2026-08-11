@@ -188,7 +188,7 @@ export const OndaMail = () => {
 };
 
 /* ================================================================== *
- * 2 · IL TRIAGE — una mattina di posta che si risponde quasi da sola
+ * 2 · IL TRIAGE — la casella che si smaltisce quasi da sola
  * ================================================================== */
 
 const MAIL = [
@@ -356,7 +356,7 @@ export const TriageMail = () => {
                 <div className="reveal mb-10 max-w-3xl">
                     <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// una mattina di posta</div>
                     <h2 className="font-display font-medium text-3xl md:text-5xl tracking-tight leading-tight mb-6">
-                        Guarda la posta rispondersi quasi da sola.
+                        La casella si svuota quasi da sola.
                     </h2>
                     <p className="text-mute text-lg leading-relaxed">
                         Dodici richieste vere entrano in casella. Vengono smistate, per ognuna nasce una bozza già scritta con le tue parole, e le due che toccano soldi o promesse si fermano e restano a te.{' '}
