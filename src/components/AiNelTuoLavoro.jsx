@@ -566,7 +566,40 @@ const CostSimulator = () => {
    piazzata a metà per chi non arriva in fondo. Stesso form, stesso
    endpoint /api/interesse, stesso gruppo MailerLite. ---------------- */
 
-const InterestBreak = ({ kicker, title, text }) => (
+/* le stesse voci accese di default nel simulatore, sommate: serve a
+   mostrare il confronto anche a chi il simulatore non lo tocca */
+const DELEGATO_MIN = COSE_DELEGATE.reduce((tot, c) => (c.on ? tot + c.min : tot), 0);
+const DELEGATO_MAX = COSE_DELEGATE.reduce((tot, c) => (c.on ? tot + c.max : tot), 0);
+
+const PriceCompare = ({ nota }) => (
+    <div className="rounded-xl border border-mint/25 bg-mint/[0.04] p-5 md:p-6 mb-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-dim">
+                sito, landing, blog e social fatti fare fuori
+            </div>
+            <div className="font-display font-medium text-xl md:text-2xl text-mute tabular-nums line-through decoration-mute/40 decoration-2">
+                {euro(DELEGATO_MIN)} – {euro(DELEGATO_MAX)}
+            </div>
+        </div>
+        <div className="h-px bg-line my-4" />
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-mint">
+                il percorso, prezzo di lancio prima coorte
+            </div>
+            <div className="font-display font-medium text-3xl md:text-4xl text-mint leading-none tracking-tightest tabular-nums">
+                {euro(PREZZO_PERCORSO)}
+            </div>
+        </div>
+        <p className="text-mute text-sm leading-relaxed mt-4">
+            In un’unica soluzione oppure tre rate da <span className="text-fg">€1.400</span>. E dopo queste cose te le fai da te quante volte vuoi, senza chiedere un preventivo a nessuno.
+        </p>
+        <p className="text-dim text-[11px] leading-relaxed mt-3">
+            Cifre indicative del mercato italiano sul primo anno, non preventivi. {nota}
+        </p>
+    </div>
+);
+
+const InterestBreak = ({ kicker, title, text, prezzo = true, nota }) => (
     <section className="py-16 md:py-20 border-b border-line bg-elev/20">
         <div className="container-edge max-w-2xl">
             <div className="reveal text-center mb-7">
@@ -576,6 +609,7 @@ const InterestBreak = ({ kicker, title, text }) => (
                 </h2>
                 <p className="text-mute leading-relaxed">{text}</p>
             </div>
+            {prezzo && <div className="reveal"><PriceCompare nota={nota} /></div>}
             <div className="reveal">
                 <InterestForm />
             </div>
@@ -809,9 +843,10 @@ const AiNelTuoLavoro = () => {
 
             {/* ---------- LISTA D'INTERESSE (intermedia 1) ---------- */}
             <InterestBreak
-                kicker="// prima di andare avanti"
-                title="Ti sta già interessando? Non serve leggere fino in fondo."
-                text="Le candidature aprono a fine agosto e i posti sono tre. Lasciami nome e mail qui: quando apro te lo scrivo io, prima che agli altri. Poi torni a leggere il resto con calma."
+                kicker="// tre posti, prima coorte"
+                title="Ti va di esserci?"
+                text="Le candidature aprono a fine agosto e i posti sono tre. Lasciami nome e mail: quando apro te lo scrivo io, prima che agli altri."
+                nota="Più sotto trovi il conto fatto sulle voci che riguardano davvero te."
             />
 
             {/* ---------- COSE CHE PRIMA NON POTEVI FARE ---------- */}
@@ -1029,9 +1064,10 @@ const AiNelTuoLavoro = () => {
 
             {/* ---------- LISTA D'INTERESSE (intermedia 2) ---------- */}
             <InterestBreak
-                kicker="// se i conti ti tornano"
-                title="Se il conto ti torna, mettiti in lista adesso."
-                text="Sotto ci sono il prezzo, come si entra e le domande che ti stai facendo. Ma se hai già capito che è roba per te, lasciami nome e mail: a fine agosto ti avviso io, senza che tu debba ricordarti di tornare qui."
+                kicker="// se il conto ti torna"
+                title="Mettiti in lista adesso."
+                text="I posti sono tre e le candidature aprono a fine agosto. Lasciami nome e mail: ti avviso io, senza che tu debba ricordarti di tornare qui."
+                nota="Sono le stesse voci del simulatore qui sopra, con i valori di partenza."
             />
 
             {/* ---------- PREZZO E ACCESSO ---------- */}
