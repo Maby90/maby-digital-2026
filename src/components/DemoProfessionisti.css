@@ -310,8 +310,15 @@
 .mk-center-label { fill: rgb(var(--mint)); font-size: 9px; font-family: "Geist Mono", "JetBrains Mono", ui-monospace, monospace; }
 
 @media (max-width: 640px) {
-    .mk-prospects { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    /* i volti vanno a capo su due righe: senza spazio verticale l'etichetta
+       "bozza pronta" della seconda riga finisce sopra i nomi della prima */
+    .mk-prospects { grid-template-columns: repeat(4, 1fr); column-gap: 6px; row-gap: 26px; }
     .mk-outs { grid-template-columns: 1fr; }
+    .mk-ntag { font-size: 8px; padding: 1px 5px; top: -13px; }
+    .mk-caption { flex-wrap: wrap; row-gap: 4px; font-size: 9px; }
+    .mk-bars { gap: 6px; }
+    .mk-funnel { flex-wrap: wrap; row-gap: 6px; }
+    .mk-stamp { right: 10px; top: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

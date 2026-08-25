@@ -27,7 +27,7 @@ const Navbar = () => {
 
     return (
         <header
-            className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${scrolled ? 'border-b border-line bg-bg/80 backdrop-blur-xl' : 'border-b border-transparent'}`}
+            className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${scrolled ? 'border-b border-line bg-bg md:bg-bg/80 md:backdrop-blur-xl' : 'border-b border-transparent'}`}
         >
             <nav className="container-edge flex items-center justify-between h-14">
                 <Link to="/" className="flex items-center gap-2 group shrink-0">

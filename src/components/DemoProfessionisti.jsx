@@ -32,6 +32,7 @@ const cssRGB = (name, fallback) => {
 export const OndaMail = () => {
     const wrap = useRef(null);
     const canvas = useRef(null);
+    const copyRef = useRef(null);
     const numRef = useRef(null);
     const tagRef = useRef(null);
 
@@ -47,7 +48,7 @@ export const OndaMail = () => {
 
         const ctx = cv.getContext('2d');
         const MW = 13, MH = 9.5;
-        let W = 0, H = 0, parts = [], P = 0, raf = 0;
+        let W = 0, H = 0, parts = [], P = 0, raf = 0, mobile = false, yMin = 0;
         const mint = cssRGB('--mint', '110,231,183');
         const mute = cssRGB('--mute', '139,139,146');
         const bg = cssRGB('--bg', '10,10,11');
@@ -57,21 +58,32 @@ export const OndaMail = () => {
             W = cv.clientWidth; H = cv.clientHeight;
             cv.width = W * dpr; cv.height = H * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            const mobile = W < 820;
-            const gx0 = mobile ? W * 0.08 : W * 0.5;
-            const gx1 = W * 0.94;
-            const gy0 = mobile ? H * 0.56 : H * 0.2;
-            const gy1 = H * 0.86;
-            const n = 300;
-            const cols = Math.max(8, Math.floor((gx1 - gx0) / (MW + 8)));
+            mobile = W < 820;
+            /* da telefono il testo sta sopra e le buste vivono solo nella
+               fascia libera sotto: niente buste addosso alle parole */
+            if (mobile) {
+                const cb = copyRef.current?.getBoundingClientRect();
+                const wb = wrap.current?.getBoundingClientRect();
+                const sotto = cb && wb ? cb.bottom - wb.top + 28 : H * 0.66;
+                yMin = Math.min(Math.max(sotto, H * 0.5), H * 0.78);
+            } else {
+                yMin = 0;
+            }
+            const gx0 = mobile ? W * 0.05 : W * 0.5;
+            const gx1 = mobile ? W * 0.97 : W * 0.94;
+            const gy0 = mobile ? yMin + 10 : H * 0.2;
+            const gy1 = mobile ? H * 0.97 : H * 0.86;
+            const n = mobile ? 156 : 300;
+            const cols = Math.max(8, Math.floor((gx1 - gx0) / (MW + (mobile ? 5 : 8))));
             const rows = Math.ceil(n / cols);
             parts = Array.from({ length: n }, (_, i) => {
                 const c = i % cols, r = Math.floor(i / cols);
                 return {
                     ph1: Math.random() * 6.28, ph2: Math.random() * 6.28,
                     sp1: 0.3 + Math.random() * 0.5, sp2: 0.2 + Math.random() * 0.4,
-                    cx: Math.random() * W, cy: Math.random() * H,
-                    ax: 40 + Math.random() * 120, ay: 30 + Math.random() * 90,
+                    cx: Math.random() * W, cy: yMin + Math.random() * (H - yMin),
+                    ax: mobile ? 20 + Math.random() * 60 : 40 + Math.random() * 120,
+                    ay: mobile ? 10 + Math.random() * 26 : 30 + Math.random() * 90,
                     gx: gx0 + c * ((gx1 - gx0) / cols), gy: gy0 + r * ((gy1 - gy0) / rows),
                     delay: Math.random(),
                     kind: (i % 43 === 0) ? 'rossa' : (i % 9 === 0 ? 'grigia' : 'mint'),
@@ -112,8 +124,9 @@ export const OndaMail = () => {
                 ctx.fillStyle = gl; ctx.fillRect(0, 0, W, H);
             }
             for (const p of parts) {
-                const wx = p.cx + Math.sin(t * p.sp1 + p.ph1) * p.ax + Math.cos(t * 0.17 + p.ph2) * 24;
-                const wy = p.cy + Math.cos(t * p.sp2 + p.ph2) * p.ay + Math.sin(t * 0.13 + p.ph1) * 18;
+                const wx = p.cx + Math.sin(t * p.sp1 + p.ph1) * p.ax + Math.cos(t * 0.17 + p.ph2) * (mobile ? 10 : 24);
+                let wy = p.cy + Math.cos(t * p.sp2 + p.ph2) * p.ay + Math.sin(t * 0.13 + p.ph1) * (mobile ? 8 : 18);
+                if (mobile && wy < yMin) wy = yMin + (yMin - wy) * 0.4;
                 const w0 = 0.4 + p.delay * 0.28;
                 const s = easeIO(Math.max(0, Math.min(1, (P - w0) / 0.22)));
                 const x = lerp(wx, p.gx, s), y = lerp(wy, p.gy, s);
@@ -156,27 +169,27 @@ export const OndaMail = () => {
 
     return (
         <section className="border-b border-line">
-            <div ref={wrap} className="relative h-screen min-h-[560px] overflow-hidden">
+            <div ref={wrap} className="relative h-screen min-h-[600px] overflow-hidden">
                 <canvas ref={canvas} className="absolute inset-0 w-full h-full" />
-                <div className="relative h-full container-edge flex items-center">
-                    <div className="max-w-md">
+                <div className="relative h-full container-edge flex items-start pt-24 md:items-center md:pt-0">
+                    <div ref={copyRef} className="max-w-md">
                         <div className="font-mono text-xs uppercase tracking-widest text-mint mb-5">// dove finisce la giornata</div>
-                        <h2 className="font-display font-medium text-3xl md:text-5xl tracking-tight leading-tight mb-7">
+                        <h2 className="font-display font-medium text-[26px] md:text-5xl tracking-tight leading-tight mb-5 md:mb-7">
                             Ogni mese la stessa onda, e la prendi tutta tu.
                         </h2>
-                        <div className="flex items-baseline gap-3 mb-5">
-                            <span ref={numRef} className="font-display font-medium text-5xl md:text-6xl text-mint tabular-nums leading-none">0</span>
-                            <span className="text-mute text-sm leading-snug max-w-[16rem]">
+                        <div className="flex items-baseline gap-3 mb-4 md:mb-5">
+                            <span ref={numRef} className="font-display font-medium text-4xl md:text-6xl text-mint tabular-nums leading-none">0</span>
+                            <span className="text-mute text-[13px] md:text-sm leading-snug max-w-[16rem]">
                                 fra mail, messaggi e richieste che chiedono quasi sempre le stesse cinque cose
                             </span>
                         </div>
-                        <p className="text-mute leading-relaxed">
+                        <p className="text-mute text-[15px] md:text-base leading-relaxed">
                             Disponibilità, preventivi, appuntamenti da spostare, documenti mancanti, a che punto siamo. Risposte una per una, a mano, mentre il lavoro per cui ti pagano aspetta il suo turno.
                         </p>
                         <div
                             ref={tagRef}
                             style={{ opacity: 0, transition: 'opacity .6s' }}
-                            className="mt-7 inline-flex items-center gap-2 rounded-full border border-mint/30 bg-mint/10 px-4 py-2 font-mono text-xs uppercase tracking-widest text-mint"
+                            className="mt-5 md:mt-7 inline-flex items-center gap-2 rounded-full border border-mint/30 bg-mint/10 px-4 py-2 font-mono text-xs uppercase tracking-widest text-mint"
                         >
                             <span className="w-1.5 h-1.5 rounded-full bg-mint" /> smistate, bozze pronte
                         </div>
@@ -457,7 +470,11 @@ export const SchedaUnica = () => {
     };
 
     const flyRow = async (fromEl, r, isDup, my) => {
-        const fast = !motionOK();
+        /* da telefono i tre pannelli stanno uno sotto l'altro: una riga che
+           vola in position:fixed attraversa mezza pagina e finisce addosso
+           al testo. Li' la riga si posa e basta. */
+        const stretto = typeof window !== 'undefined' && window.innerWidth < 768;
+        const fast = !motionOK() || stretto;
         const fr = fromEl.getBoundingClientRect();
         const fly = document.createElement('div');
         fly.className = 'sr-row sr-fly';
@@ -478,11 +495,15 @@ export const SchedaUnica = () => {
             outRef.current?.appendChild(target);
         }
         const tr = target.getBoundingClientRect();
-        await new Promise((res) => gsap.to(fly, {
-            x: tr.left - fr.left, y: tr.top - fr.top, width: tr.width,
-            duration: fast ? 0 : 0.55, ease: 'power3.inOut', onComplete: res,
-        }));
-        fly.remove();
+        if (fast) {
+            fly.remove();
+        } else {
+            await new Promise((res) => gsap.to(fly, {
+                x: tr.left - fr.left, y: tr.top - fr.top, width: tr.width,
+                duration: 0.55, ease: 'power3.inOut', onComplete: res,
+            }));
+            fly.remove();
+        }
         if (my !== token.current || !alive.current) return;
         target.style.opacity = 1;
         target.classList.add('is-landed');

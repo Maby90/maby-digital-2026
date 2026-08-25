@@ -1059,7 +1059,7 @@ const AiNelTuoLavoro = () => {
                                 Il sito che vorresti rifare, il blog che non aggiorni mai, i social che qualcuno ti gestisce a mese, la landing del servizio nuovo, il lancio del corso che rimandi. Ognuna di queste cose oggi ha un prezzo, e lo paghi ogni volta che ti serve.
                             </p>
                             <p className="text-fg">
-                                Dopo tre mesi le costruisci con il tuo sistema, in un pomeriggio, e le rifai quante volte vuoi senza chiedere niente a nessuno. Qui sotto togli e aggiungi quelle che ti riguardano davvero: a destra vedi quanto ti costerebbero delegate, e quanto costa invece il percorso.
+                                Dopo tre mesi le costruisci con il tuo sistema, in un pomeriggio, e le rifai quante volte vuoi senza chiedere niente a nessuno. Qui sotto togli e aggiungi quelle che ti riguardano davvero, e vedi quanto ti costerebbero delegate, e quanto costa invece il percorso.
                             </p>
                         </div>
                     </div>
